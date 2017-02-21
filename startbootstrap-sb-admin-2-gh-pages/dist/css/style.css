@@ -1,0 +1,17 @@
+.navbar-brand-logo {
+    width: 20px;
+    height: auto;
+}
+#brand {
+    display: none;
+}
+#login-as {
+    font-size: 18px;
+    font-style: italic;
+}
+
+@media (min-width: 600px) {
+    #brand {
+        display: inherit;
+    }
+}
