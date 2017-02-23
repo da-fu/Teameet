@@ -1,17 +1,29 @@
 .navbar-brand-logo {
-    width: 20px;
-    height: auto;
+    width: auto;;
+    height: 20px;
 }
-#brand {
+#logo-title {
     display: none;
 }
 #login-as {
     font-size: 18px;
     font-style: italic;
 }
+#panel-login-identity {
+    font-style: italic;
+    color: #777;
+}
+.userIcon {
+    height: auto;
+    width: 20%;
+    min-width: 20%;
+}
 
 @media (min-width: 600px) {
-    #brand {
+    #logo-title {
         display: inherit;
+    }
+    #logo {
+        display: none;
     }
 }
