@@ -6,6 +6,10 @@ Please be advised:
   
   - Homepage is designed based on the template referenced to: https://startbootstrap.com/template-overviews/landing-page/
   
+  - DataTables is used in our webpages for table display, as a part of SB Admin 2. It's referenced to: https://datatables.net/
+  
+  - Licences for two templates are located in the "license" folder
+  
   - The citations of other small modules and designing elements developed by third-party are written in each HTML file and CSS file. You can find the citation in the comments.
   
   - CSS codes written and customized by myself are in CSS files ending with "_style.css".
