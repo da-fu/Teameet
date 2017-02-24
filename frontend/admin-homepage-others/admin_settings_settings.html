@@ -1,0 +1,215 @@
+<!-- Page elements are referenced to "Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)"-->
+
+<!-- Page elements and frameworks are referenced to Bootstrap v3.3.7 (http://getbootstrap.com/)-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard - Teameet</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="static/css/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="static/css/sb-admin-2.css" rel="stylesheet">
+    <link href="static/css/dashboard_style.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery -->
+    <script src="static/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="static/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="static/js/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="static/js/sb-admin-2.js"></script>
+
+</head>
+
+
+
+
+
+<body>
+
+<div id="wrapper">
+
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+                <img src="static/img/logo_dashboard.png" alt="">
+            </a>
+        </div>
+
+        <ul class="nav navbar-top-links navbar-right navbar-collapse">
+
+
+            <li class="dropdown">
+                <a class="dropdown-toggle currentPage" data-toggle="dropdown" href="admin_welcome.html">
+                    <i class="fa fa-dashboard fa-fw"></i> General
+                </a>
+            </li>
+
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="admin_requests.html">
+                    <i class="fa fa-inbox fa-fw"></i> Messages
+                </a>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="admin_database.html">
+                    <i class="fa fa-database fa-fw"></i> Database
+                </a>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="admin_settings_profile.html">
+                    <i class="fa fa-cogs fa-fw"></i> Settings
+                </a>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+
+
+
+
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <h3 class="page-header">Profile & Settings</h3>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="admin_settings_profile.html">Edit Profile</a></li>
+                        <li class="active"><a href="#">Change Settings</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-7">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-cog fa-fw"></i> System Settings
+                        </div>
+                        <!-- /.panel-heading -->
+                        <form>
+                            <div class="panel-body">
+
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value=""><p><strong>I do want to receive email notification about system errors.</strong></p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+
+
+
+
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4 text-center">
+                                        <br>
+                                        <button type="submit" class="btn btn-primary btn-warning btn-lg btn-block">Change Settings</button>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                </div>
+
+                            </div>
+                            <!-- /.panel-body -->
+                        </form>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 text-center">
+                                <p>By clicking the button below, your admin account will be deleted.</p>
+                                <p><strong>Suspended account cannot be recovered!</strong></p>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4 text-center">
+                                <br>
+                                <button type="submit" class="btn btn-primary btn-danger btn-lg btn-block">Suspend Account</button>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <br>
+
+
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+
+
+</body>
+
+</html>
