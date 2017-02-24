@@ -1,0 +1,6 @@
+Please be advised:
+  - Bootstrap is used as our frontend framework, referenced to: http://getbootstrap.com/
+  - Pages of dashboard for admins is designed based on SB Admin 2, referenced to: https://startbootstrap.com/template-overviews/sb-admin-2/
+  - Homepage is designed based on the template referenced to: https://startbootstrap.com/template-overviews/landing-page/
+  - The citations of other small modules developed by third-party are written in each HTML file and CSS file. You can find the citation in the comments.
+  - For css files ending with "_style.css", those were written by ourselves.
