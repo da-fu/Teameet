@@ -12,6 +12,6 @@ Please be advised:
   
   - The citations of other small modules and designing elements developed by third-party are written in each HTML file and CSS file. You can find the citation in the comments.
   
-  - CSS codes written and customized by myself are in CSS files ending with "_style.css".
+  - CSS codes written and customized by myself are in CSS files ending with "_style.css". Some of them were used to override the original css configuration in templates.
   
   - Attributes for some icons from flaticon and all vectors from freepik have been noted in the html file, and some licenses of icons have been bought by us.
