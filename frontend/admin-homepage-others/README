@@ -1,0 +1,17 @@
+Please be advised:
+
+  - Bootstrap is used as our primary frontend framework, referenced to: http://getbootstrap.com/
+  
+  - All the pages in this folder, except the homepage, is designed based on SB Admin 2, referenced to: https://startbootstrap.com/template-overviews/sb-admin-2/
+  
+  - Homepage is designed based on the template referenced to: https://startbootstrap.com/template-overviews/landing-page/
+  
+  - DataTables is used in our webpages for table display, as a part of SB Admin 2. It's referenced to: https://datatables.net/
+  
+  - Licences for two templates are located in the "license" folder
+  
+  - The citations of other small modules and designing elements developed by third-party are written in each HTML file and CSS file. You can find the citation in the comments.
+  
+  - CSS codes written and customized by myself are in CSS files ending with "_style.css". Some of them were used to override the original css configuration in templates.
+  
+  - Attributes for some icons from flaticon and all vectors from freepik have been noted in the html file, and some licenses of icons have been bought by us.
