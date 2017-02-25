@@ -6,3 +6,4 @@ to be used for your teamwork on the project
 - The pages for students are located in /frontend/student/pages
 - The pages for instructors are located in /frontend/instructor/pages, profile and settings page is shared with student-section.
 - The pages of homepage, sign in & sign on, admin dashboard, privacy policy and terms of use are located in /frontend/admin-homepage-others (multiple external resources were used, see the in-code citation and Readme.md in /frontend/admin-homepage-others for details)
+- Revised phase 1 document has been uploaded. Several changes were made.
