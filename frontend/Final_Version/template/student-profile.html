@@ -1,3 +1,8 @@
+<!-- Page elements are referenced to "Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)"-->
+
+<!-- Page elements and frameworks are referenced to Bootstrap v3.3.7 (http://getbootstrap.com/)-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,25 +14,25 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Create a Team</title>
+    <title>User Profile - Teameet</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../static/student/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/instructor/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="../static/student/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="../static/instructor/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../static/student/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../static/instructor/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="../static/student/vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="../static/instructor/vendor/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="../static/student/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
+    <link href="../static/instructor/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
     <!-- style.css -->
-    <link href="../static/student/dist/css/style.css" rel="stylesheet">
+    <link href="../static/instructor/dist/css/style.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,7 +56,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="select.html"><img class="navbar-brand-logo" src="../static/student/image/logo_title_smaller.png" alt="logo"></a>
+                <a class="navbar-brand" href="select.html" id="logo"><img class="navbar-brand-logo" src="../static/instructor/image/logo_512.png" alt="logo"></a>
+                <a class="navbar-brand" href="select.html" id="logo-title"><img class="navbar-brand-logo" src="../static/instructor/image/logo_title.png" alt="logo"></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -68,15 +74,6 @@
                                 <div>
                                     <i class="fa fa-comment fa-fw"></i> New Comment
                                     <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
                                 </div>
                             </a>
                         </li>
@@ -151,12 +148,10 @@
                             </div>
                             <!-- /input-group -->
                         </li>
-                        
                         <li>
                             <a href="select.html"><i class="fa fa-users fa-fw"></i> Teams</a>
                         </li>
-                            <!-- /.nav-second-level -->
-                        </li>
+
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -167,71 +162,75 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Create a Team</h1>
+                    <h1 class="page-header">Your Profile</h1>
                 </div>
-                <div class="row">
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Please provide the following information to create a team
+                            You logged in as <span id="panel-login-identity">Student</span>
                         </div>
-                        <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <!-- Nav tabs -->
-                            
-                            <div class="col-xs-12" style="height:100px;">
-                            </div>
-                            <!-- Tab panes -->
-                            <form class="searchinput" role="form">
-                                        University:
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form role="form">
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="University">
+                                            <label>University</label>
+                                            <p class="form-control-static">University of Toronto</p>
                                         </div>
-                                        Course:
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Course Number">
-                                            
+                                            <label>Email</label>
+                                            <p class="form-control-static">example@teameet.com</p>
                                         </div>
-                                        Section:
                                         <div class="form-group">
-                                            
-                                            <input class="form-control" placeholder="Example: 01">
+                                            <label>Given Name</label>
+                                            <input class="form-control" placeholder="Instrutor">
                                         </div>
-                                        Team Status:
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Example: 2/4">
-                                            
+                                            <label>Family Name</label>
+                                            <input class="form-control" placeholder="Teameet">
                                         </div>
-                                        Your Name:
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="First and Last Name">
-                                            
+                                            <label>Bio</label>
+                                            <textarea class="form-control" rows="3" placeholder="Add a bio..."></textarea>
                                         </div>
-                                        Your Email Address:
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Example: xxxx@mail.utoronto.ca">
-                                            
+                                            <label>Birthday</label>
+                                            <input class="form-control" type="date" name="birthday">
                                         </div>
-                                        What do you want to name your group?
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Example: The Amazing Group">
-                                            
+                                            <label>Security Question</label>
+                                            <input class="form-control" required>
                                         </div>
-                                         <a href="#"><button type="button" class="btn btn-default pull-right">Submit</button></a>
+                                        <div class="form-group">
+                                            <label>Answer to Your Question</label>
+                                            <input class="form-control" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                        <button type="reset" class="btn btn-default">Reset</button>
                                     </form>
-                            <div class="col-xs-12" style="height:100px;">
+                                </div>
+                                <div class="col-lg-6 text-center">
+                                    <img class="userIcon" alt="" src="../static/instructor/image/unknown_user.png">
+                                    <hr>
+                                    <div class="form-group text-center">
+                                        <label>Change your Profile Photo</label>
+                                        <input type="file" class="form-control">
+                                    </div>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-6 -->
-            </div>
                 <!-- /.col-lg-12 -->
             </div>
-           
-            <!-- /.row -->
-            <!-- /.row -->
+
         </div>
         <!-- /#page-wrapper -->
 
@@ -239,21 +238,21 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="../static/student/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/instructor/vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../static/student/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/instructor/vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="../static/student/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../static/instructor/vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="../static/student/vendor/raphael/raphael.min.js"></script>
-    <script src="../static/student/vendor/morrisjs/morris.min.js"></script>
-    <script src="../static/student/data/morris-data.js"></script>
+    <script src="../static/instructor/vendor/raphael/raphael.min.js"></script>
+    <script src="../static/instructor/vendor/morrisjs/morris.min.js"></script>
+    <script src="../static/instructor/data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="../static/student/dist/js/sb-admin-2.js"></script>
+    <script src="../static/instructor/dist/js/sb-admin-2.js"></script>
 
 </body>
 
