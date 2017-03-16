@@ -29,20 +29,20 @@
                 </span>
 
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form" action="/logincheck" method="post">
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
                             </div>
                             <div class="form-group">
-                                <input class="form-control second_form" placeholder="Password" name="password" type="password" value="">
+                                <input class="form-control second_form" placeholder="Password" name="password" type="password" value=""> 
                             </div>
                             <h4 class="forPass"><small>Forget your password? <a href="/forgetPassword">Click Here</a></small></h4>
-                            <a href="index.html" class="btn btn-lg btn-block btn_login btn-primary">Log in</a>
+                            <button type="submit" class="btn btn-lg btn-block btn_login btn-primary">Log in</button>
                         </fieldset>
                     </form>
                     <hr>
-                    <a href="index.html" class="btn btn-lg btn-success btn-block">Create New Account</a>
+                    <a href="/registration_step1" class="btn btn-lg btn-success btn-block">Create New Account</a>
                 </div>
 
             </div>
