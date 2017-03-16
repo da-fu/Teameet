@@ -175,14 +175,17 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <% courses.forEach(function(course){ %>
+                <% select_groups.forEach(function(group){ 
+                    if(group.leaderEmail == global_identity.email){
+                    %>
+
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-12 text-center">
-                                    <div class="huge"><%= course.courseCode %></div>
-                                    <div><%= course.courseName %></div>
+                                    <div class="huge"><%= group.course %></div>
+                                    <div><%= group.groupName %></div>
                                 </div>
                             </div>
                         </div>
@@ -195,7 +198,7 @@
                         </a>
                     </div>
                 </div>
-                <% }) %>
+                <%} }) %>
             </div>
             <!-- /.row -->
             <div class="panel panel-default">

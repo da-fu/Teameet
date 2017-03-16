@@ -244,10 +244,10 @@ app.post('/checkCourse', function (req, res) {
 });
 
 app.get('/select', function (req, res) {
-  course.find({}, function (err, courses) {
+  group.find({}, function (err, groups) {
     if (err) throw err;
     res.render('select', {
-      courses: courses,
+      select_groups: groups,
       global_identity:global_user_identity
     });
   });
@@ -278,17 +278,11 @@ app.post('/logincheck', function (req, res) {
         global_user_identity = i;
         flag=1;
         if (i.status == "Student") {
-          course.find({}, function (err, courses) {
-            if (err) throw err;
-            res.render('select', {
-              courses: courses,
-              global_identity:global_user_identity
-            });
-          });
+          
+            res.redirect("select");
+          
         } else{
-          res.render("instructor", {          
-            global_identity:global_user_identity
-          })
+          res.redirect("instructor");
         }
       }
     });
