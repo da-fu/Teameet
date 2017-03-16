@@ -5,9 +5,8 @@ var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 //https://github.com/davidwood/node-password-hash
 var passwordHash = require('password-hash');
+var nodemailer = require('nodemailer');
 
-
-mongoose.connect('mongodb://localhost/teameet-test');
 
 var app = express();
 app.set('view engine', 'ejs');
@@ -29,8 +28,22 @@ app.use(bodyParser.urlencoded({
 }));
 
 
+///////////////////////////////////////////// Email SMTP //////////////////////////////////////////////////
+
+// The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
+var mailServer = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'teameet.contact@gmail.com',
+    pass: 'csc309teameet'
+  }
+});
+
+
+
 ////////////////////////////////////////// Database Configuration //////////////////////////////////////////
 
+mongoose.connect('mongodb://localhost/teameet-test');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'database: connection error:'));
 db.once('open', function() {
@@ -45,8 +58,8 @@ var userSchema=mongoose.Schema({
   password: String,
   securityQuestion: String,
   securityAnswer: String,
-  activated: Boolean
-  createTime: Timestamp
+  activated: Boolean,
+  createTime: Date
 });
 var user = mongoose.model('user', userSchema);
 
@@ -65,11 +78,11 @@ var groupSchema=mongoose.Schema({
   university: String,
   course: String,
   section: String,
-  status: Float,
+  status: String,
   leaderName: String,
   leaderEmail: String,
   groupName: String,
-  groupId: Integer
+  groupId: Number
 });
 var group = mongoose.model('group',groupSchema);
 
@@ -80,11 +93,11 @@ var courseSchema=mongoose.Schema({
   courseCode: String,
   courseName: String,
   courseDescription: String,
-  numberLimit: Integer,
+  numberLimit: Number,
   deadline: Date,
   requirements: String,
   deadlinePassed: Boolean,
-  createTime:Timestamp
+  createTime:Date
 });
 var course = mongoose.model('course', courseSchema);
 
@@ -98,7 +111,7 @@ var membership = mongoose.model('membership', membershipSchema);
 
 var messageSchema=mongoose.Schema({
   title: String,
-  time: Timestamp,
+  time: Date,
   sender: String,
   content: String
 });
@@ -151,26 +164,107 @@ app.get('/registration_step1', function(req,res){
 
 app.post('/checkReg', function(req,res){
 
-  var db=req.db;
-  var collection = db.get('user');
+  var userStatusCache=req.body.status;
+  //console.log(userStatus);
+  var givenNameCache=req.body.givenName;
+  //console.log(givenName);
+  var familyNameCache=req.body.familyName;
+  //console.log(familyName);
+  var emailAddr=req.body.email;
+  //console.log(emailAddr);
+  var passwordCache=req.body.password;
+  //console.log(password);
+  var securityQuestionCache=req.body.securityQuestion;
+  //console.log(securityQuestion);
+  var securityAnswerCache=req.body.securityAnswer;
+  //console.log(securityAnswer);
 
-  var userStatus=req.body.status;
-  var givenName=req.body.givenName;
-  var familyName=req.body.familyName;
-  var email=req.body.email;
-  var password=req.body.password;
-  var passwordCheck=req.body.passwordCheck;
-  var securityQuestion=req.body.securityQuestion;
-  var securityAnswer=req.body.securityAnswer;
-
-  var passwordFlag=false;
   var emailFlag=false;
 
-  //if(password!==passwordCheck)
-  //    passwordFlag=true;
+  user.find({ email:emailAddr }, function(err,user) {
+    if (user.email==emailAddr)
+        emailFlag=true;
+  });
 
+
+  var newUser = new user({
+    status: userStatusCache,
+    givenName: givenNameCache,
+    familyName: familyNameCache,
+    email: emailAddr,
+    password: passwordCache,
+    securityQuestion: securityQuestionCache,
+    securityAnswer: securityAnswerCache,
+    // "activated" will be set to false by default until the SMTP middleware is in service
+    activated: true
+  });
+  newUser.save(function(err) {
+    if (err)
+      throw err;
+    console.log('User created!');
+  });
+
+  //This part can only be tested once the website is registered with a specific domain.
+  /*
+  var userID;
+  User.find({email:emailAddr}, function(err, user) {
+    if (err)
+      throw err;
+    else
+      userID=user._id;
+  });
+
+  // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
+  var mailConfirmation = {
+    from: 'teameet.contact@gmail.com',
+    to: emailAddr,
+    subject: 'Thank you for choosing Teameet',
+    text: 'Thank you for choosing Teameet! Please click the link below to activate your account.',
+    html: '<a href="http://localhost:3000/?method=activation&userID='+userID+'">'
+  };
+
+  // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
+  mailServer.sendMail(mailConfirmation, function(error, info){
+    if(error){
+      console.log(error);
+    }else{
+      console.log('Message sent: ' + info.response);
+    }
+  });
+
+  */
+
+  res.redirect("/registration_step2")
 
 });
+
+app.get('/registration_step2', function(req,res){
+  res.render('registration_step2');
+});
+
+
+// use regular expression to handle the GET query
+app.get('/xxxxxxxxxx', function(req,res){
+  if(req.query.method =="activation"){
+    user.find({ _id:req.query.userID }, function(err,user) {
+      if (err)
+        throw err
+      else{
+        if (user.activated===false){
+          req.session.userEmail=user.email;
+          res.render('registration_step3');
+        }
+        else{
+          res.send("This account has been activated!");
+        }
+      }
+    });
+  }
+  else{
+    res.send("The page requested is invalid!");
+  }
+});
+
 
 app.get("/dashboardPrep", function(req,res){
   if (req.session.loggedIn) {
