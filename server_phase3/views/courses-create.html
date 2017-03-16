@@ -176,7 +176,8 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form role="form">
+                                    <form role="form" method="post" action="/checkCourse">
+                                        
                                         <div class="form-group col-lg-6">
                                             <label>University</label>
                                             <p class="form-control-static">University of Toronto</p>
@@ -187,17 +188,17 @@
                                         </div>
                                         <div class="form-group col-lg-6">
                                             <label>Course Code</label>
-                                            <input class="form-control">
+                                            <input class="form-control" name="courseCode">
                                             <p class="help-block">e.g. CSC148</p>
                                         </div>
                                         <div class="form-group col-lg-6">
                                             <label>Course Name</label>
-                                            <input class="form-control">
+                                            <input class="form-control" name="courseName">
                                             <p class="help-block">e.g. Intro. To Python</p>
                                         </div>
                                         <div class="form-group col-lg-12">
                                             <label>Course Description</label>
-                                            <textarea class="form-control" rows="3" placeholder=" A brief description about the course..."></textarea>
+                                            <textarea name="courseDescription" class="form-control" rows="3" placeholder=" A brief description about the course..."></textarea>
                                         </div>
                                         <div class="form-group col-lg-6">
                                             <label>Number of Students Per Group</label>
@@ -220,6 +221,7 @@
                                         </div>
                                         <button type="submit" class="btn btn-default">Submit</button>
                                         <button type="reset" class="btn btn-default">Reset</button>
+                                        
                                     </form>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->

@@ -9,7 +9,8 @@ var nodemailer = require('nodemailer');
 
 
 var app = express();
-app.set('view engine', 'ejs');
+app.engine('.html', require('ejs').__express);
+app.set('view engine', 'html');
 
 app.use(express.static(__dirname + '/static'));
 app.use(express.static(__dirname + '/'));
@@ -145,6 +146,12 @@ app.get('/', function(req,res){
 app.get('/TermsOfUse', function(req,res){
   res.render('Terms_Of_Use');
 });
+app.get('/test', function(req,res){
+  user.find({}, function(err, users) {
+    if (err) throw err;
+    res.render('test', {users:users});    
+  });
+});
 
 app.get('/PrivacyPolicy', function(req,res){
   res.render('privacy_policy');
@@ -156,6 +163,39 @@ app.get('/login', function(req,res){
 
 app.post('/checkLogin', function(req,req){
 
+});
+app.get('/courses-create', function(req,res){
+  res.render('courses-create');
+});
+app.post('/checkCourse', function(req,res){
+
+  
+  var newCourse = new course({
+    university: "uof",
+    instructor: "bg",
+    courseCode: req.body.courseCode,
+    courseName: req.body.courseName,
+    courseDescription: req.body.courseDescription,
+    numberLimit: 1,
+    deadline: new Date(),
+    requirements: "String",
+    deadlinePassed: true,
+    createTime:new Date()
+  });
+  newCourse.save(function(err) {
+    if (err)
+      throw err;
+    console.log('Course created!');
+    
+  });
+   res.redirect("/select")
+});
+
+app.get('/select', function(req,res){
+      course.find({}, function(err, courses) {
+        if (err) throw err;
+        res.render('select', {courses:courses});    
+      });
 });
 
 app.get('/registration_step1', function(req,res){
@@ -202,6 +242,7 @@ app.post('/checkReg', function(req,res){
     if (err)
       throw err;
     console.log('User created!');
+    
   });
 
   //This part can only be tested once the website is registered with a specific domain.
