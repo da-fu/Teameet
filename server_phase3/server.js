@@ -124,6 +124,8 @@ var message = mongoose.model('message', messageSchema);
 
 //////////////////////////////////////////////// Routers /////////////////////////////////////////////////
 
+var global_user_identity;
+
 app.get('/', function (req, res) {
   /*
   var newUser = new user({
@@ -142,19 +144,19 @@ app.get('/', function (req, res) {
     console.log('User created!');
   });
   */
-  res.render('index');
+  res.render('index', {global_identity:global_user_identity});
 });
 
 app.get('/join-team', function (req, res) {
-  res.render('join-team');
+  res.render('join-team', {global_identity:global_user_identity});
 });
 
 app.get('/student-profile', function (req, res) {
-  res.render('student-profile');
+  res.render('student-profile', {global_identity:global_user_identity});
 });
 
 app.get('/student-setting', function (req, res) {
-  res.render('student-setting');
+  res.render('student-setting', {global_identity:global_user_identity});
 });
 
 
@@ -166,17 +168,22 @@ app.get('/test', function (req, res) {
   user.find({}, function (err, users) {
     if (err) throw err;
     res.render('test', {
-      users: users
+      users: users,
+      global_identity:global_user_identity
     });
   });
 });
 
 app.get('/PrivacyPolicy', function (req, res) {
-  res.render('privacy_policy');
+  res.render('privacy_policy', {global_identity:global_user_identity});
 });
 
 app.get('/login', function (req, res) {
-  res.render('login');
+  res.render('login', {global_identity:global_user_identity});
+});
+
+app.get('/login_fail', function (req, res) {
+  res.render('login_fail', {global_identity:global_user_identity});
 });
 
 app.post('/checkLogin', function (req, res) {
@@ -184,7 +191,7 @@ app.post('/checkLogin', function (req, res) {
 });
 
 app.get('/create-team', function (req, res) {
-  res.render('create-team');
+  res.render('create-team', {global_identity:global_user_identity});
 });
 
 app.post('/checkteam', function (req, res) {
@@ -208,7 +215,7 @@ app.post('/checkteam', function (req, res) {
 });
 
 app.get('/courses-create', function (req, res) {
-  res.render('courses-create');
+  res.render('courses-create', {global_identity:global_user_identity});
 });
 
 
@@ -240,7 +247,8 @@ app.get('/select', function (req, res) {
   course.find({}, function (err, courses) {
     if (err) throw err;
     res.render('select', {
-      courses: courses
+      courses: courses,
+      global_identity:global_user_identity
     });
   });
 });
@@ -256,34 +264,42 @@ app.get('/select', function (req, res) {
 // });
 
 app.get('/registration_step1', function (req, res) {
-  res.render('registration_step1');
+  res.render('registration_step1', {global_identity:global_user_identity});
 });
 
 app.post('/logincheck', function (req, res) {
+  var flag=0;
   var login_email = req.body.email;
   var login_password = req.body.password;
   user.find({}, function (err, users) {
     if (err) throw err;
     users.forEach(function (i) {
       if (i.email == login_email && i.password == login_password) {
+        global_user_identity = i;
+        flag=1;
         if (i.status == "Student") {
           course.find({}, function (err, courses) {
             if (err) throw err;
             res.render('select', {
               courses: courses,
-              login_id: i
+              global_identity:global_user_identity
             });
           });
-        } else {
-          res.render("instructor", {
-            login_id: i
+        } else{
+          res.render("instructor", {          
+            global_identity:global_user_identity
           })
         }
       }
     });
+    if(flag==0){
+      res.redirect("login_fail");
+    }  
   });
 
 });
+
+
 
 
 app.post('/checkReg', function (req, res) {
@@ -372,7 +388,8 @@ app.post('/checkresult', function (req, res) {
     if (err) throw err;
     res.render('result', {
       groups: groups,
-      coursenum: course
+      coursenum: course,
+      global_identity:global_user_identity
     });
   });
 
@@ -382,7 +399,7 @@ app.post('/checkresult', function (req, res) {
 
 
 app.get('/registration_step2', function (req, res) {
-  res.render('registration_step2');
+  res.render('registration_step2',{global_identity:global_user_identity});
 });
 
 
@@ -397,7 +414,7 @@ app.get('/xxxxxxxxxx', function (req, res) {
       else {
         if (user.activated === false) {
           req.session.userEmail = user.email;
-          res.render('registration_step3');
+          res.render('registration_step3',{global_identity:global_user_identity});
         } else {
           res.send("This account has been activated!");
         }
