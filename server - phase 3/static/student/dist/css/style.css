@@ -1,0 +1,32 @@
+.navbar-brand-logo {
+    width: 170px;
+    height: auto;
+}
+#brand {
+    display: none;
+}
+#login-as {
+    font-size: 18px;
+    font-style: italic;
+}
+
+.joinpills{
+   height: 43vh;
+}
+
+.team-input{
+    width: 50%;
+    text-align: center;
+    margin-left: 25%;
+    
+}
+.searchinput{
+    width: 50%;
+    margin-left: 25%;
+}
+
+@media (min-width: 600px) {
+    #brand {
+        display: inherit;
+    }
+}
