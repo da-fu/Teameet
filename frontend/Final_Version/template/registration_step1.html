@@ -1,0 +1,163 @@
+<!-- Page elements are referenced to "Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)"-->
+
+<!-- Page elements and frameworks are referenced to Bootstrap v3.3.7 (http://getbootstrap.com/)-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration - Teameet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../static/main-admin/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../static/main-admin/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../static/main-admin/css/registration_style.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="../static/main-admin/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<!--Solution of Navbar with well-sized logo image is referenced to:
+http://codepen.io/bootstrapped/pen/KwYGwq-->
+
+    <nav class="navbar navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar3">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href=""><img src="../static/main-admin/img/logo_invert.png" alt="">
+                </a>
+            </div>
+            <div class="regProgress">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="disabled"><a class="progress_name currentStep">Step 1 - Get Started</a></li>
+                    <li class="disabled"><a class="progress_name otherStep">Step 2 - Verification</a></li>
+                    <li class="disabled"><a class="progress_name otherStep">Step 3 - Finish</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+        <!--/.container-fluid -->
+    </nav>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="page-header">Let's get started!</h2>
+                <br>
+                <div class="row">
+                        <form role="form">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>Please select your status</label>
+                                        <select class="form-control" required>
+                                            <option>Select...</option>
+                                            <option>Student</option>
+                                            <option>Instructor</option>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>Given Name</label>
+                                        <input class="form-control" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Family Name</label>
+                                        <input class="form-control" required>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input class="form-control" type="email" placeholder="example@example.com" required>
+                                </div>
+                                <br>
+                                <hr>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label>Set your password</label>
+                                                <input class="form-control" type="password" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label>Confirm your password</label>
+                                                <input class="form-control" type="password" placeholder="Re-enter your password to check" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label>Security question</label>
+                                                <input class="form-control"  required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label>Answer to your question</label>
+                                                <input class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Panel code is referenced to: https://www.w3schools.com/bootstrap/bootstrap_panels.asp-->
+                                    <div class="col-md-6">
+                                        <div class="panel panel-warning">
+                                            <div class="panel-heading">Tips about Password and Account Security</div>
+                                            <div class="panel-body">
+                                                <ul>
+                                                    <li>At least 8 characters are required for the password. For your account security, please avoid using a password from another site.</li>
+                                                    <br>
+                                                    <li>Using security question is our only way to identify the user to allow you reset the password, so please choose it wisely. </li>
+                                                    <br>
+                                                    <li>Your account security is our prior concern. We have a strict privacy policy. <a href="">Click here</a> to learn more about it.</li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4 text-center">
+                                    <br>
+                                    <br>
+                                    <a href="registration_step2.html"><button type="submit" class="btn btn-primary btn-lg btn-block">Next Step</button></a>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+<br>
+
+
+</body>
+</html>
