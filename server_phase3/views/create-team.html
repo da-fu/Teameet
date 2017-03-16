@@ -182,43 +182,43 @@
                             <div class="col-xs-12" style="height:100px;">
                             </div>
                             <!-- Tab panes -->
-                            <form class="searchinput" role="form">
+                            <form  role="form" method="post" action="/checkteam">
                                         University:
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="University">
+                                            <input name="university" class="form-control" placeholder="University">
                                         </div>
                                         Course:
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Course Number">
+                                            <input name="course" class="form-control" placeholder="Course Number">
                                             
                                         </div>
                                         Section:
                                         <div class="form-group">
                                             
-                                            <input class="form-control" placeholder="Example: 01">
+                                            <input name="section" class="form-control" placeholder="Example: 01">
                                         </div>
                                         Team Status:
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Example: 2/4">
+                                            <input name="status" class="form-control" placeholder="Example: 2/4">
                                             
                                         </div>
                                         Your Name:
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="First and Last Name">
+                                            <input name="leadername" class="form-control" placeholder="First and Last Name">
                                             
                                         </div>
                                         Your Email Address:
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Example: xxxx@mail.utoronto.ca">
+                                            <input name="leaderemail" class="form-control" placeholder="Example: xxxx@mail.utoronto.ca">
                                             
                                         </div>
                                         What do you want to name your group?
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Example: The Amazing Group">
+                                            <input name="groupname" class="form-control" placeholder="Example: The Amazing Group">
                                             
                                         </div>
-                                         <a href="#"><button type="button" class="btn btn-default pull-right">Submit</button></a>
-                                    </form>
+                                         <button type="submit" class="btn btn-default pull-right">Submit</button>
+                            </form>
                             <div class="col-xs-12" style="height:100px;">
                         </div>
                         <!-- /.panel-body -->

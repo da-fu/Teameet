@@ -15,7 +15,6 @@ app.set('view engine', 'html');
 app.use(express.static(__dirname + '/static'));
 app.use(express.static(__dirname + '/'));
 
-
 app.use(session({
   secret: 'teameetSession',
   resave: true,
@@ -161,17 +160,44 @@ app.get('/login', function(req,res){
   res.render('login');
 });
 
-app.post('/checkLogin', function(req,req){
+app.post('/checkLogin', function(req,res){
 
 });
+
+app.get('/create-team', function(req,res){
+  res.render('create-team');
+});
+
+app.post('/checkteam', function(req,res){  
+  var newTeam = new group({
+    university: "UofT",
+    course: req.body.course,
+    section: req.body.section,
+    status: req.body.status,
+    leaderName: req.body.leadername,
+    leaderEmail: req.body.leaderemail,
+    groupName: req.body.groupname,
+    groupId: 1
+  });
+  newTeam.save(function(err) {
+    if (err)
+      throw err;
+    console.log('Team created!');
+    
+  });
+   res.redirect("/result")
+});
+
 app.get('/courses-create', function(req,res){
   res.render('courses-create');
 });
+
+
 app.post('/checkCourse', function(req,res){
 
   
   var newCourse = new course({
-    university: "uof",
+    university: "uoft",
     instructor: "bg",
     courseCode: req.body.courseCode,
     courseName: req.body.courseName,
@@ -196,6 +222,16 @@ app.get('/select', function(req,res){
         if (err) throw err;
         res.render('select', {courses:courses});    
       });
+});
+
+app.get('/result', function(req,res){
+  
+      group.find({}, function(err, groups) {
+        if (err) throw err;
+        res.render('result', {groups:groups});    
+      });
+      
+      
 });
 
 app.get('/registration_step1', function(req,res){

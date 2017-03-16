@@ -28,9 +28,6 @@
 
     <!-- style.css -->
     <link href="../static/student/dist/css/style.css" rel="stylesheet">
-    
-    <!-- bg.css -->
-    <link href="../static/student/dist/css/bg.css" rel="stylesheet">
 
      <!-- DataTables CSS -->
     <link href="../static/student/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
@@ -225,114 +222,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <% groups.forEach(function(group){ %>
                                 <tr class="odd gradeX">
-                                    <td>1</td>
-                                    <td>Faker</td>
-                                    <td>3/4</td>
-                                    <td>Bowen</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
+                                    <td><%= group.groupId %></td>
+                                    <td><%= group.groupName %></td>
+                                    <td><%= group.status %></td>
+                                    <td><%= group.leaderName %></td>
+                                    <td class="center"><%= group.leaderEmail %></td>
                                     <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
                                     <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
                                 </tr>
-                                <tr class="even gradeC">
-                                    <td>2</td>
-                                    <td>Clearlove</td>
-                                    <td>2/4</td>
-                                    <td>Da</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="odd gradeA">
-                                    <td>3</td>
-                                    <td>PDD</td>
-                                    <td>4/4</td>
-                                    <td>Yunhao</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="even gradeA">
-                                    <td>4</td>
-                                    <td>Tracer</td>
-                                    <td>1/4</td>
-                                    <td>Zi</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="odd gradeA">
-                                    <td>5</td>
-                                    <td>Doublelift</td>
-                                    <td>1/4</td>
-                                    <td>Jason</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="even gradeA">
-                                    <td>6</td>
-                                    <td>AmazingJ</td>
-                                    <td>2/4</td>
-                                    <td>Lisa</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>7</td>
-                                    <td>Athena</td>
-                                    <td>2/4</td>
-                                    <td>Baochun</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>8</td>
-                                    <td>Winston</td>
-                                    <td>2/4</td>
-                                    <td>Tina</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>9</td>
-                                    <td>Team Solo Mid</td>
-                                    <td>2/4</td>
-                                    <td>Elle</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>10</td>
-                                    <td>SKT T1</td>
-                                    <td>2/4</td>
-                                    <td>Felix</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>11</td>
-                                    <td>Laker</td>
-                                    <td>2/4</td>
-                                    <td>Bob</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>12</td>
-                                    <td>Huston</td>
-                                    <td>2/4</td>
-                                    <td>Brain</td>
-                                    <td class="center">xxxx.mail.utoronto.ca</td>
-                                    <td class="center"><a href="team_info_result.html"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
-                                </tr>
+                                 <% }) %>
                                 </tbody>
                             </table>
                         </div>
