@@ -10,7 +10,7 @@ to be used for your teamwork on the project
 
 # Phase 3 - Instruction & Acknowledgement
 ### Instruction
--  
+- All the files related to phase 3 are in the folder "server_phase3".
 - There are several accounts for testing purpose. If you get tired of our secured registration process, please feel free to use any of them. Passwords are all set to 12345678 by default.
     
 ### Acknowledgement
