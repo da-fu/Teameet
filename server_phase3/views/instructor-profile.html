@@ -56,55 +56,33 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="instructor.html" id="logo"><img class="navbar-brand-logo" src="../static/instructor/image/logo_512.png" alt="logo"></a>
-                <a class="navbar-brand" href="instructor.html" id="logo-title"><img class="navbar-brand-logo" src="../static/instructor/image/logo_title.png" alt="logo"></a>
+                <a class="navbar-brand" href="/" id="logo"><img class="navbar-brand-logo" src="../static/instructor/image/logo_512.png" alt="logo"></a>
+                <a class="navbar-brand" href="/" id="logo-title"><img class="navbar-brand-logo" src="../static/instructor/image/logo_title.png" alt="logo"></a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <span class="navbar-brand" id="login-as">Instructor</span>
+                <span class="navbar-brand" id="login-as"><%= fullName %></span>
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
+                       <%  var a=0; messages.forEach(function(message){ 
+                             if(a<4){
+                             %>
                         <li>
                             <a href="#">
                                 <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                    <i class="fa fa-comment fa-fw"></i> <%= message.content %>
+                                    <span class="pull-right text-muted small"><%= message.time %></span>
                                 </div>
                             </a>
                         </li>
+                        
                         <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
+                        <% } a+=1;}) %>
                         <li>
                             <a class="text-center" href="#">
                                 <strong>See All Alerts</strong>
@@ -165,6 +143,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Your Profile</h1>
+                    <% if (passwordCheck) { %>
+                    <div class="alert alert-danger">
+                        Password confirmation error. Please enter the same password in the "Confirm Your Password" field.
+                    </div>
+                    <% } %>
+                    <% if (changed) { %>
+                    <div class="alert alert-success">
+                        All changes have been applied.
+                    </div>
+                    <% } %>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -172,57 +160,85 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            You logged in as <span id="panel-login-identity">Instructor</span>
+                            You logged in as <span id="panel-login-identity"><%= email %></span>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <form role="form">
-                                        <div class="form-group">
-                                            <label>University</label>
-                                            <p class="form-control-static">University of Toronto</p>
+                                <div class="col-lg-12">
+                                    <form method="post" action="/inst_profile_check">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-7">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label>Given Name</label>
+                                                            <input class="form-control" type="text" name="givenName">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label>Last Name</label>
+                                                            <input class="form-control" type="text" name="lastName">
+                                                        </div>
+                                                    </div>
+                                                    <!--div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label>Email Address</label>
+                                                            <input class="form-control"  name="email">
+                                                        </div>
+                                                    </div-->
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label>Reset your password</label>
+                                                            <input class="form-control" type="password" name="password">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label>Confirm your password</label>
+                                                            <input class="form-control" type="password" name="passwordCheck" placeholder="Re-enter your password to check">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label>Security Question</label>
+                                                            <input class="form-control" name="securityQuestion">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label>Answer to Your Question</label>
+                                                            <input class="form-control" name="securityAnswer" placeholder="You must provide an answer to the question">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-md-5 text-center">
+                                                    <img class="userIcon" alt="" src="../static/main-admin/img/unknown_user.png">
+                                                    <hr>
+                                                    <div class="form-group text-center">
+                                                        <label>Change your Profile Photo</label>
+                                                        <input type="file" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4"></div>
+                                                <div class="col-md-4 text-center">
+                                                    <br>
+                                                    <button type="submit" class="btn btn-primary btn-warning btn-lg btn-block">Change Profile</button>
+                                                </div>
+                                                <div class="col-md-4"></div>
+                                            </div>
+
                                         </div>
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <p class="form-control-static">example@teameet.com</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Given Name</label>
-                                            <input class="form-control" placeholder="Instrutor">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Family Name</label>
-                                            <input class="form-control" placeholder="Teameet">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Bio</label>
-                                            <textarea class="form-control" rows="3" placeholder="Add a bio..."></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Birthday</label>
-                                            <input class="form-control" type="date" name="birthday">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Security Question</label>
-                                            <input class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Answer to Your Question</label>
-                                            <input class="form-control" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-default">Submit</button>
-                                        <button type="reset" class="btn btn-default">Reset</button>
+                                        <!-- /.panel-body -->
                                     </form>
                                 </div>
-                                <div class="col-lg-6 text-center">
-                                    <img class="userIcon" alt="" src="../static/instructor/image/unknown_user.png">
-                                    <hr>
-                                    <div class="form-group text-center">
-                                        <label>Change your Profile Photo</label>
-                                        <input type="file" class="form-control">
-                                    </div>
-                                </div>
-                                <!-- /.col-lg-6 (nested) -->
+
                             </div>
                             <!-- /.row (nested) -->
                         </div>

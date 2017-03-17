@@ -31,17 +31,18 @@
                 <div class="panel-body">
                     <% if (wrongPassword) { %>
                     <div class="alert alert-danger">
-                        Wrong password. Please try again.
+                        <p>Wrong password. Please try again.</p>
                     </div>
                     <% } %>
                     <% if (notActivated) { %>
                     <div class="alert alert-info">
-                        Your account hasn't been activated. Please check your email for the verification link.
+                        <p>Your account hasn't been activated. Please check your email for the verification link.</p>
                     </div>
                     <% } %>
                     <% if (wrongAccount) { %>
                     <div class="alert alert-warning">
-                        We don't have any account registered with this email. Please try again
+                        <p>We don't have any account registered with this email.</p>
+                        <p>Please try again</p>
                     </div>
                     <% } %>
                     <form role="form" method="post" action="/checkLogin">

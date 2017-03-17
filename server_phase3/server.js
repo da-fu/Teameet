@@ -10,7 +10,7 @@ var passwordHash = require('password-hash');
 var nodemailer = require('nodemailer');
 var {ObjectId} = require('mongodb');
 var moment = require('moment');
-
+var generator = require('generate-password');
 var app = express();
 
 app.engine('.html', require('ejs').__express);
@@ -91,6 +91,7 @@ var group = mongoose.model('group', groupSchema);
 var courseSchema = mongoose.Schema({
   university: String,
   instructor: String,
+  ins_email: String,
   courseCode: String,
   courseName: String,
   courseDescription: String,
@@ -130,341 +131,540 @@ var request = mongoose.model('request', requestSchema);
 //////////////////////////////////////////////// Routers - Homepage & Register & Log-in & Reset Password /////////////////////////////////////////////////
 
 app.get('/', function (req, res) {
-  if (req.session.loggedIn == true) {
-    res.redirect('/dashboardPrep');
-  }
-  else
-    res.render('index');
+    if (req.session.loggedIn == true) {
+        res.redirect('/dashboardPrep');
+    }
+    else{
+        var totalNumberStudent;
+        var totalNumberInstructor;
+        var totalNumberTeam;
+
+        user.find({status:"student"}).count(function (err, stuCount) {
+            totalNumberStudent = stuCount;
+            user.find({status:"instructor"}).count(function (err, insCount) {
+                totalNumberInstructor=insCount;
+                group.find().count(function (err, groupCount) {
+                    totalNumberTeam=groupCount;
+                    res.render('index', {countStudent:totalNumberStudent, countInstructor:totalNumberInstructor, countGroup:totalNumberTeam});
+                });
+            });
+        });
+    }
+
 });
 
 
 app.get('/TermsOfUse', function (req, res) {
-  res.render('Terms_Of_Use');
+    res.render('Terms_Of_Use');
 });
 
 app.get('/PrivacyPolicy', function (req, res) {
-  res.render('privacy_policy');
+    res.render('privacy_policy');
 });
 
 app.get('/login', function (req, res) {
-  res.render('login', { wrongPassword: false, notActivated: false, wrongAccount: false });
+    res.render('login', {wrongPassword: false, notActivated: false, wrongAccount: false});
 });
 
 app.post('/checkLogin', function (req, res) {
-  var passwordFlag = false;
-  var accountFlag = false;
-  var activationFlag = false;
-  var userName = req.body.email;
-  var password = req.body.password;
+    var passwordFlag = false;
+    var accountFlag = false;
+    var activationFlag = false;
+    var userName = req.body.email;
+    var password = req.body.password;
 
-  user.find({ email: userName }, function (err, userFound) {
-    console.log(userFound);
-    if (userFound.length == 0) {
-      console.log("User doesn't exist");
-      accountFlag = true;
-    }
-    else {
-      if (userFound.activated == false) {
-        console.log("Account hasn't been activated");
-        activationFlag = true;
-      }
-      else {
-        if (passwordHash.verify(password, userFound[0].password)) {
-          console.log("welcome!");
-          req.session.status = userFound.status;
+    user.find({email: userName}, function (err, userFound) {
+        console.log(userFound);
+        if (userFound.length == 0) {
+            console.log("User doesn't exist");
+            accountFlag = true;
         }
         else {
-          console.log("password error!");
-          passwordFlag = true;
+            if (userFound.activated == false) {
+                console.log("Account hasn't been activated");
+                activationFlag = true;
+            }
+            else {
+                if (passwordHash.verify(password, userFound[0].password)) {
+                    console.log("welcome!");
+                    if(userFound[0].lastLoginTime){
+                        userFound[0].lastLoginTime=userFound[0].currentLoginTime;
+                        userFound[0].currentLoginTime=moment().format('MMMM Do YYYY, h:mm:ss a');
+                        req.session.lastLoginTime=userFound[0].lastLoginTime;
+                        req.session.currentLoginTime=userFound[0].currentLoginTime;
+                    }
+                    else{
+                        userFound[0].lastLoginTime=moment().format('MMMM Do YYYY, h:mm:ss a');
+                        userFound[0].currentLoginTime=moment().format('MMMM Do YYYY, h:mm:ss a');
+                        req.session.lastLoginTime=userFound[0].lastLoginTime;
+                        req.session.currentLoginTime=userFound[0].currentLoginTime;
+                    }
+                    req.session.status = userFound.status;
+                }
+                else {
+                    console.log("password error!");
+                    passwordFlag = true;
+                }
+            }
         }
-      }
-    }
 
-    if (!passwordFlag && !accountFlag && !activationFlag) {
-      req.session.email = userName;
-      req.session.status = userFound[0].status;
-      req.session.loggedIn = true;
-      res.redirect('/dashboardPrep');
-    }
-    else {
-      res.render('login', { wrongPassword: passwordFlag, notActivated: activationFlag, wrongAccount: accountFlag });
-    }
+        if (!passwordFlag && !accountFlag && !activationFlag) {
+            req.session.email = userName;
+            req.session.status = userFound[0].status;
+            req.session.loggedIn = true;
+            req.session.firstName=userFound[0].givenName;
+            req.session.lastName=userFound[0].familyName;
+            res.redirect('/dashboardPrep');
+        }
+        else {
+            res.render('login', {wrongPassword: passwordFlag, notActivated: activationFlag, wrongAccount: accountFlag});
+        }
 
-  });
+    });
 
 });
 
 app.get('/registration_step1', function (req, res) {
-  var emailFlag = false;
-  var passwordFlag = false;
-  res.render('registration_step1', { duplicate: emailFlag, pwNotSame: passwordFlag });
+    var emailFlag = false;
+    var passwordFlag = false;
+    res.render('registration_step1', {duplicate: emailFlag, pwNotSame: passwordFlag});
 });
 
 app.post('/checkReg', function (req, res) {
 
-  var userStatusCache = req.body.status;
-  //console.log(userStatus);
-  var givenNameCache = req.body.givenName;
-  //console.log(givenName);
-  var familyNameCache = req.body.familyName;
-  //console.log(familyName);
-  var emailAddr = req.body.email;
-  //console.log(emailAddr);
-  var passwordCache = req.body.password;
-  //console.log(passwordCache);
-  var passwordconfirmCache = req.body.passwordCheck;
-  //console.log(passwordconfirmCache);
-  var securityQuestionCache = req.body.securityQuestion;
-  //console.log(securityQuestion);
-  var securityAnswerCache = req.body.securityAnswer;
-  //console.log(securityAnswer);
+    var userStatusCache = req.body.status;
+    //console.log(userStatus);
+    var givenNameCache = req.body.givenName;
+    //console.log(givenName);
+    var familyNameCache = req.body.familyName;
+    //console.log(familyName);
+    var emailAddr = req.body.email;
+    //console.log(emailAddr);
+    var passwordCache = req.body.password;
+    //console.log(passwordCache);
+    var passwordconfirmCache = req.body.passwordCheck;
+    //console.log(passwordconfirmCache);
+    var securityQuestionCache = req.body.securityQuestion;
+    //console.log(securityQuestion);
+    var securityAnswerCache = req.body.securityAnswer;
+    //console.log(securityAnswer);
 
-  var emailFlag = false;
-  var passwordFlag = false;
+    var emailFlag = false;
+    var passwordFlag = false;
 
-  user.find({ email: emailAddr }, function (err, userFound) {
-    //console.log(userFound);
-    if (userFound.length != 0) {
-      console.log("dup!!!");
-      emailFlag = true;
-      //res.render("registration_step1",{duplicate:emailFlag,pwNotSame:passwordFlag});
-    }
-    if (passwordconfirmCache != passwordCache) {
-      passwordFlag = true;
-    }
-    if (passwordFlag || emailFlag) {
-      res.render("registration_step1", { duplicate: emailFlag, pwNotSame: passwordFlag });
-    }
-    else {
-      var hashedPassword = passwordHash.generate(passwordCache);
-      console.log(hashedPassword);
+    user.find({email: emailAddr}, function (err, userFound) {
+        //console.log(userFound);
+        if (userFound.length != 0) {
+            console.log("dup!!!");
+            emailFlag = true;
+            //res.render("registration_step1",{duplicate:emailFlag,pwNotSame:passwordFlag});
+        }
+        if (passwordconfirmCache != passwordCache) {
+            passwordFlag = true;
+        }
+        if (passwordFlag || emailFlag) {
+            res.render("registration_step1", {duplicate: emailFlag, pwNotSame: passwordFlag});
+        }
+        else {
+            var hashedPassword = passwordHash.generate(passwordCache);
+            console.log(hashedPassword);
 
-      var newUser = new user({
-        status: userStatusCache,
-        givenName: givenNameCache,
-        familyName: familyNameCache,
-        email: emailAddr,
-        password: hashedPassword,
-        securityQuestion: securityQuestionCache,
-        securityAnswer: securityAnswerCache,
-        // "activated" will be set to true by default until the SMTP middleware is tested and work in service
-        activated: true
-      });
-      newUser.save(function (err) {
-        if (err)
-          throw err;
-        console.log('A new user registered!');
-      });
+            var newUser = new user({
+                status: userStatusCache,
+                givenName: givenNameCache,
+                familyName: familyNameCache,
+                email: emailAddr,
+                password: hashedPassword,
+                securityQuestion: securityQuestionCache,
+                securityAnswer: securityAnswerCache,
+                // "activated" will be set to true by default until the SMTP middleware is tested and work in service
+                activated: true
+            });
+
+            newUser.save(function (err) {
+                if (err)
+                    throw err;
+                console.log('A new user registered!');
 
 
-      //This part can only be tested once the website is registered with a specific domain.
-      /*
-       var userID;
-       User.find({email:emailAddr}, function(err, user) {
-       if (err)
-       throw err;
-       else
-       userID=user._id;
-       });
+                //This part can only be tested once the website is registered with a specific domain.
+                user.find({email:emailAddr}, function(err, user) {
+                    if (err)
+                        throw err;
+                    else{
+                        // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
+                        var mailConfirmation = {
+                            from: 'teameet.contact@gmail.com',
+                            to: emailAddr,
+                            subject: 'Thank you for choosing Teameet',
+                            //text: 'Thank you for choosing Teameet! Please click the link below to activate your account.',
+                            html: 'Thank you for choosing Teameet! Please click <a href="http://127.0.0.1:3000/activation_email_user?id='+user[0]._id+'">here </a>to activate your account.'
 
-       // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
-       var mailConfirmation = {
-       from: 'teameet.contact@gmail.com',
-       to: emailAddr,
-       subject: 'Thank you for choosing Teameet',
-       text: 'Thank you for choosing Teameet! Please click the link below to activate your account.',
-       html: '<a href="http://localhost:3000/?method=activation&userID='+userID+'">'
-       };
+                        };
 
-       // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
-       mailServer.sendMail(mailConfirmation, function(error, info){
-       if(error){
-       console.log(error);
-       }else{
-       console.log('Message sent: ' + info.response);
-       }
-       });
+                        // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
+                        mailServer.sendMail(mailConfirmation, function(error, info){
+                            if(error){
+                                console.log(error);
+                            }else{
+                                console.log('Message sent: ' + info.response);
+                            }
+                        });
 
-       */
+                    }
+                });
+            });
 
-      res.redirect("/registration_step2");
-    }
-  });
+            res.redirect("/registration_step2");
+        }
+    });
 
 
 });
 
 app.get('/registration_step2', function (req, res) {
-  res.render('registration_step2');
+    res.render('registration_step2');
 });
 
 
-// use regular expression to handle the GET query
-/*
- app.get('/xxxxxxxxxx', function(req,res){
- if(req.query.method =="activation"){
- user.find({ _id:req.query.userID }, function(err,user) {
- if (err)
- throw err;
- else{
- if (user.activated===false){
- req.session.userEmail=user.email;
- res.render('registration_step3');
- }
- else{
- res.send("This account has been activated!");
- }
- }
+ app.get('/activation_email_user', function(req,res){
+    var userID=req.query.id;
+     //console.log(userID);
+     user.findOneAndUpdate({_id:userID},
+         {activated: true}, function (err, user) {
+             if (err) throw err;
+             res.redirect("/registration_step3");
+         });
+
  });
- }
- else{
- res.send("The page requested is invalid!");
- }
- });
- */
+
+app.get('/registration_step3', function (req, res) {
+    res.render('registration_step3');
+});
+
 
 app.get('/resetPassword_step1', function (req, res) {
-  res.render('resetPassword_step1');
+    res.render('resetPassword_step1');
 });
 
+var userEmail_resetPassword;
+
 app.post('/resetPassword_emailCheck', function (req, res) {
-  var userName = req.body.email;
-  user.find({ email: userName }, function (err, userFound) {
-    if (userFound.length == 0) {
-      console.log("no such email addr");
-    }
-    else {
-      req.session.userEmail = userName;
-      req.session.securityQ = userFound[0].securityQuestion;
-      req.session.securityA = userFound[0].securityAnswer;
-      console.log(req.session.securityA);
-      res.redirect("/resetPassword_step2");
-    }
-  });
+    var userName = req.body.email;
+    user.find({email: userName}, function (err, userFound) {
+        if (userFound.length == 0) {
+            console.log("no such email addr");
+        }
+        else {
+            userEmail_resetPassword = userName;
+            req.session.securityQ = userFound[0].securityQuestion;
+            req.session.securityA = userFound[0].securityAnswer;
+            console.log(req.session.securityA);
+            res.redirect("/resetPassword_step2");
+        }
+    });
 });
 
 app.get('/resetPassword_step2', function (req, res) {
-  console.log(req.session.securityQ);
-  res.render('resetPassword_step2', { question: req.session.securityQ, failure: false });
+    //console.log(req.session.securityQ);
+    res.render('resetPassword_step2', {question: req.session.securityQ,failure:false});
 });
 
 app.post('/securityQACheck', function (req, res) {
-  var answer = req.body.answer;
-  if (answer == req.session.securityA) {
-    /*
-    //This part can only be tested once the website is registered with a specific domain.
-    // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
-    var mailConfirmation = {
-        from: 'teameet.contact@gmail.com',
-        to: req.session.userEmail,
-        subject: 'Temporary Password - Teameet',
-        text: 'Thank you for choosing Teameet! Please click the link below to activate your account.',
-        html: '<a href="http://localhost:3000/?method=activation&userID=' + userID + '">'
-    };
+    var answer = req.body.answer;
+    if (answer == req.session.securityA) {
 
-    // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
-    mailServer.sendMail(mailConfirmation, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Message sent: ' + info.response);
-        }
-    });
-    */
+        user.find({email:userEmail_resetPassword},function(err,userGroup){
+            if (err)
+                throw err;
+            //This part can only be tested once the website is registered with a specific domain.
+            // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
 
-    res.redirect('/resetPassword_step3');
-  }
-  else {
-    res.render('resetPassword_step2', { question: req.session.securityQ, failure: true })
-  }
+            var passwordCache = generator.generate({
+                length: 10,
+                numbers: true
+            });
+            var hashedPassword = passwordHash.generate(passwordCache);
+
+            user.findOneAndUpdate({email:userEmail_resetPassword}, {password: hashedPassword}, function (err, user) {
+                    if (err) throw err;
+
+                var mailConfirmation = {
+                    from: 'teameet.contact@gmail.com',
+                    to: userEmail_resetPassword,
+                    subject: 'Password Recovery - Teameet',
+                    text: 'We strongly suggest you change the current password for security purpose. Here is the password of your account: '+passwordCache
+                };
+
+                // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
+                mailServer.sendMail(mailConfirmation, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Message sent: ' + info.response);
+                    }
+                });
+
+                res.redirect('/resetPassword_step3');
+
+                });
+
+        });
+
+    }
+    else {
+        res.render('resetPassword_step2',{question: req.session.securityQ,failure:true})
+    }
 });
 
 app.get('/resetPassword_step3', function (req, res) {
-  res.render('resetPassword_step3');
+    res.render('resetPassword_step3');
 });
 
 
 app.get("/dashboardPrep", function (req, res) {
-  if (req.session.loggedIn) {
-    console.log(req.session.status);
-    if (req.session.status === "instructor")
-      res.redirect('/instructor_welcome');
-    else if (req.session.status === "student")
-      res.redirect('/student_welcome');
+    if (req.session.loggedIn) {
+        console.log(req.session.status);
+        if (req.session.status === "instructor")
+            res.redirect('/instructor_welcome');
+        else if (req.session.status === "student")
+            res.redirect('/student_welcome');
+        else
+            res.redirect('/admin_welcome');
+    }
     else
-      res.redirect('/admin_welcome');
-  }
-  else
-    res.redirect('/');
+        res.redirect('/');
 });
 
 app.get("/logout", function (req, res) {
-  req.session.destroy();
-  res.redirect("/");
+    req.session.destroy();
+    res.redirect("/");
 });
+
 
 
 ////////////////////////////////////////////////// Routers - Admin ////////////////////////////////////////////////////
 
 app.get("/admin_welcome", function (req, res) {
-  var totalNumberUser;
-  user.find().count(function (err, count) {
-    totalNumberUser = count;
-    var totalNumberRequests;
-    message.find().count(function (err, countTemp) {
-      totalNumberRequests = countTemp;
-      console.log(countTemp);
-      res.render('admin_welcome', { userNumber: totalNumberUser, messageNumber: totalNumberRequests });
-    });
-  });
+    if (req.session.email || req.session.status == "admin") {
+        var totalNumberUser;
+        user.find().count(function (err, count) {
+            totalNumberUser = count;
+            var totalNumberRequests;
+            message.find().count(function (err, countTemp) {
+                totalNumberRequests = countTemp;
+                console.log(countTemp);
+                res.render('admin_welcome', {
+                    userNumber: totalNumberUser,
+                    messageNumber: totalNumberRequests,
+                    lastLogin: moment(req.session.lastLoginTime, 'MMMM Do YYYY, h:mm:ss a').fromNow()
+                });
+            });
+        });
+    }
+    else{
+        res.redirect("/login");
+    }
 
 });
 
 
 app.get("/admin_settings_settings", function (req, res) {
-  res.render('admin_settings_settings');
+    if (req.session.email || req.session.status == "admin") {
+        res.render('admin_settings_settings');
+    }
+    else{
+        res.redirect("/login");
+    }
 });
 
 
 app.get("/admin_settings_profile", function (req, res) {
-  res.render('admin_settings_profile', { passwordCheck: false, changed: false });
+    if (req.session.email || req.session.status == "admin") {
+        res.render('admin_settings_profile', {passwordCheck: false, changed: false});
+    }
+    else{
+        res.redirect("/login")
+    }
 });
 
 
 app.get("/admin_requests", function (req, res) {
-  message.find({}, function (err, texts) {
-    res.render('admin_requests', { list: texts });
-  });
+    if (req.session.email || req.session.status == "admin") {
+        message.find({}, function (err, texts) {
+            res.render('admin_requests', {list: texts});
+        });
+    }
+    else{
+        res.redirect("/login")
+    }
 });
 
 app.post("/postNewMessage", function (req, res) {
-  var messageContent = req.body.text;
+    if (req.session.email || req.session.status == "admin") {
+        var messageContent = req.body.text;
 
-  var newMessage = new message({
-    title: "System Notification",
-    time: moment().format('MMMM Do YYYY, h:mm:ss a'),
-    sender: "Admin",
-    content: messageContent
-  });
+        var newMessage = new message({
+            title: "System Notification",
+            time: moment().format('MMMM Do YYYY, h:mm:ss a'),
+            sender: "Admin",
+            content: messageContent
+        });
 
-  newMessage.save(function (err) {
-    if (err)
-      throw err;
-    res.redirect('/admin_requests');
+        newMessage.save(function (err) {
+            if (err)
+                throw err;
+            res.redirect('/admin_requests');
 
-  });
+        });
+    }
+    else{
+        res.redirect("/login")
+    }
 
 });
 
 
 app.get("/admin_database", function (req, res) {
-  user.find({}, function (err, users) {
-    res.render('admin_database', { list: users });
-  });
+    if (req.session.email || req.session.status == "admin") {
+        user.find({}, function (err, users) {
+            res.render('admin_database', {list: users});
+        });
+    }
+    else{
+        res.redirect("/login")
+    }
 });
 
 
-app.post("/profileChangeCheck", function (req, res) {
+app.post("/admin_profileChangeCheck", function (req, res) {
+    if (req.session.email || req.session.status == "admin") {
+        var gName = req.body.givenName;
+        var fName = req.body.lastName;
+        var pw = req.body.password;
+        var pwCheck = req.body.passwordCheck;
+        var sQ = req.body.securityQuestion;
+        var sA = req.body.securityAnswer;
+        var passwordFlag = false;
+        var changeSuccess = false;
+
+        if (pw) {
+            if (pw !== pwCheck) {
+                passwordFlag = true;
+            }
+            else {
+                var hashedPassword = passwordHash.generate(pw);
+                user.findOneAndUpdate({email: req.session.email},
+                    {password: hashedPassword}, function (err, user) {
+                        if (err) throw err;
+                    });
+                changeSuccess = true;
+            }
+
+        }
+
+
+        if (gName) {
+            user.findOneAndUpdate({email: req.session.email},
+                {givenName: gName}, function (err, user) {
+                    if (err) throw err;
+                });
+            changeSuccess = true;
+        }
+
+        if (fName) {
+            user.findOneAndUpdate({email: req.session.email},
+                {familyName: fName}, function (err, user) {
+                    if (err) throw err;
+                });
+            changeSuccess = true;
+        }
+
+        if (sQ) {
+            user.findOneAndUpdate({email: req.session.email},
+                {securityQuestion: sQ}, function (err, user) {
+                    if (err) throw err;
+                });
+            changeSuccess = true;
+        }
+
+        if (sA) {
+            user.findOneAndUpdate({email: req.session.email},
+                {securityAnswer: sA}, function (err, user) {
+                    if (err) throw err;
+                });
+            changeSuccess = true;
+        }
+
+        res.render("admin_settings_profile", {passwordCheck: passwordFlag, changed: changeSuccess});
+    }
+    else{
+        res.redirect("/login")
+    }
+});
+
+/* This part will be in service after we complete the mail system
+ app.post("/profileChangeCheck",function(req,res){
+
+ });
+ */
+
+app.get("/accountSuspension", function (req, res) {
+    if (req.session.email || req.session.status) {
+        user.findOneAndRemove({email: req.session.email}, function (err) {
+            if (err) throw err;
+            req.session.destroy();
+            res.redirect("/");
+        });
+    }
+    else
+        res.redirect("/login");
+});
+
+//////////////////////////////////////////////// Routers - Instructor /////////////////////////////////////////////////
+
+app.get("/instructor_welcome", function (req, res) {
+  if (!req.session.email || req.session.status != "instructor") {
+    res.redirect('/login');
+  }
+  else {
+    course.find({}, function (err, courseList) {
+      var fullName = req.session.firstName + " " + req.session.lastName;
+      message.find({}, function (err, messages) {
+        res.render('instructor', { list: courseList, fullName: fullName, messages: messages, cur_user: req.session.email });
+      });
+
+    });
+  }
+});
+
+app.get("/instructor-setting", function (req, res) {
+  if (!req.session.email || req.session.status != "instructor") {
+    res.redirect('/login');
+  }
+  else {
+    var fullName = req.session.firstName + " " + req.session.lastName;
+    var userEmail = req.session.email;
+    message.find({}, function (err, messages) {
+      res.render('instructor-setting', { fullName: fullName, email: userEmail, messages: messages });
+    });
+  }
+});
+
+app.get("/instructor-profile", function (req, res) {
+  if (!req.session.email || req.session.status != "instructor") {
+    res.redirect('/login');
+  }
+  else {
+    var fullName = req.session.firstName + " " + req.session.lastName;
+    var userEmail = req.session.email;
+    message.find({}, function (err, messages) {
+      res.render("instructor-profile", { passwordCheck: false, changed: false, fullName: fullName, email: userEmail, messages: messages });
+    });
+  }
+});
+
+app.post("/inst_profile_check", function (req, res) {
   var gName = req.body.givenName;
   var fName = req.body.lastName;
   var pw = req.body.password;
@@ -489,12 +689,12 @@ app.post("/profileChangeCheck", function (req, res) {
 
   }
 
-
   if (gName) {
     user.findOneAndUpdate({ email: req.session.email },
       { givenName: gName }, function (err, user) {
         if (err) throw err;
       });
+    req.session.firstName = gName;
     changeSuccess = true;
   }
 
@@ -503,6 +703,7 @@ app.post("/profileChangeCheck", function (req, res) {
       { familyName: fName }, function (err, user) {
         if (err) throw err;
       });
+    req.session.lastName = fName;
     changeSuccess = true;
   }
 
@@ -522,52 +723,87 @@ app.post("/profileChangeCheck", function (req, res) {
     changeSuccess = true;
   }
 
-  res.render("admin_settings_profile", { passwordCheck: passwordFlag, changed: changeSuccess });
-});
-
-/* This part will be in service after we complete the mail system
- app.post("/profileChangeCheck",function(req,res){
-
- });
- */
-
-app.get("/accountSuspension", function (req, res) {
-  user.findOneAndRemove({ email: req.session.email }, function (err) {
-    if (err) throw err;
-    req.session.destroy();
-    res.redirect("/");
+  var fullName = req.session.firstName + " " + req.session.lastName;
+  var userEmail = req.session.email;
+  message.find({}, function (err, messages) {
+    res.render("instructor-profile", { passwordCheck: passwordFlag, changed: changeSuccess, fullName: fullName, email: userEmail, messages: messages });
   });
-});
 
-//////////////////////////////////////////////// Routers - Instructor /////////////////////////////////////////////////
-
-app.get("/instructor_welcome", function (req, res) {
-  course.find({}, function (err, courseList) {
-    res.render('instructor', { list: courseList });
-  });
-});
-
-app.get("/instructor-setting", function (req, res) {
-  res.render('instructor-setting');
-});
-
-app.get("/instructor-profile", function (req, res) {
-  res.render('instructor-profile');
 });
 
 app.get("/courses", function (req, res) {
-  course.find({}, function (err, courseList) {
-    res.render('courses', { list: courseList });
-  });
+  if (!req.session.email || req.session.status != "instructor") {
+    res.redirect('/login');
+  }
+  else {
+    course.find({}, function (err, courseList) {
+      message.find({}, function (err, messages) {
+        res.render('courses', { list: courseList, messages: messages, cur_user: req.session.email });
+      });
+    });
+  }
 });
 
 app.get("/courses-create", function (req, res) {
-  res.render('courses-create', { duplicatedCourse: false });
+  if (!req.session.email || req.session.status != "instructor") {
+    res.redirect('/login');
+  }
+  else {
+    var fullName = req.session.firstName + " " + req.session.lastName;
+    message.find({}, function (err, messages) {
+      if (err) throw err;
+      res.render('courses-create', {
+        duplicatedCourse: false,
+        fullName: fullName,
+        messages: messages
+      });
+    });
+  }
 });
 
+var resultCache = new Array();
+var courseInfoCache;
+
+app.post("/courseFind", function (req, res) {
+
+
+  var courseCodeCache = req.body.courseCode;
+
+  course.find({ courseCode: courseCodeCache }, function (err, courseFound) {
+    courseInfoCache = courseFound[0];
+    group.find({ course: courseFound[0].courseCode }, function (err, groupFound) {
+
+      for (var i = 0; i < groupFound.length; i++) {
+        console.log(groupFound[i]);
+        resultCache.push({
+          teamStatus: groupFound[i].status, teamName: groupFound[i].groupName,
+          leaderName: groupFound[i].leaderName, leaderEmail: groupFound[i].leaderEmail
+        });
+      }
+
+    });
+    res.redirect('/course-detail');
+  });
+});
+
+app.get("/course-detail", function (req, res) {
+  if (!req.session.email || req.session.status != "instructor") {
+    res.redirect('/login');
+  }
+  else {
+    message.find({}, function (err, messages) {
+      if (err) throw err;
+      res.render('course-detail', {
+        list: resultCache,
+        courseInfo: courseInfoCache,
+        messages: messages
+      });
+    });
+  }
+})
 
 app.post("/checkCourse", function (req, res) {
-
+  var fullName = req.session.firstName + " " + req.session.lastName;
   user.find({ email: req.session.email }, function (err, userFound) {
     course.find({ courseCode: req.body.courseCode.toUpperCase() }, function (err, courseFound) {
       if (courseFound.length == 0) {
@@ -576,6 +812,7 @@ app.post("/checkCourse", function (req, res) {
         var newCourse = new course({
           university: "University of Toronto",
           instructor: firstName + " " + lastName,
+          ins_email: req.session.email,
           courseCode: req.body.courseCode.toUpperCase(),
           courseName: req.body.courseName,
           courseDescription: req.body.courseDescription,
@@ -593,7 +830,7 @@ app.post("/checkCourse", function (req, res) {
         });
       }
       else {
-        res.render('/courses-create', { duplicatedCourse: true });
+        res.redirect('/courses');
       }
     });
 
@@ -604,11 +841,12 @@ app.post("/checkCourse", function (req, res) {
 });
 
 
-///////////////////////////////////////////////// Routers - Student ///////////////////////////////////////////////////
 
 ///////////////////////////////////////////////// Routers - Student ///////////////////////////////////////////////////
+
 
 app.get('/student_welcome', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   if (!req.session.email || req.session.status != "student") {
     res.redirect('/login');
   }
@@ -619,11 +857,17 @@ app.get('/student_welcome', function (req, res) {
         if (err) throw err;
         membership.find({}, function (err, memberships) {
           if (err) throw err;
-          res.render('select', {
-            cur_user: req.session.email,
-            select_groups: groups,
-            requests: requests,
-            memberships: memberships
+          message.find({}, function (err, messages) {
+            if (err) throw err;
+            console.log(messages);
+            res.render('select', {
+              messages: messages,
+              cur_user: req.session.email,
+              select_groups: groups,
+              requests: requests,
+              memberships: memberships,
+              name: name
+            });
           });
         });
 
@@ -633,60 +877,190 @@ app.get('/student_welcome', function (req, res) {
 
 });
 
+
+
+
+
+
 app.get('/join-team', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   if (!req.session.email || req.session.status != "student") {
     res.redirect('/login');
   }
   else {
-    res.render('join-team');
+    message.find({}, function (err, messages) {
+      if (err) throw err;
+      res.render('join-team', {
+        messages: messages,
+        name: name
+      });
+    });
   }
 });
 
+
+
+app.post("/stu_profile_check", function (req, res) {
+  var gName = req.body.givenName;
+  var fName = req.body.lastName;
+  var pw = req.body.password;
+  var pwCheck = req.body.passwordCheck;
+  var sQ = req.body.securityQuestion;
+  var sA = req.body.securityAnswer;
+  var passwordFlag = false;
+  var changeSuccess = false;
+
+  if (pw) {
+    if (pw !== pwCheck) {
+      passwordFlag = true;
+    }
+    else {
+      var hashedPassword = passwordHash.generate(pw);
+      user.findOneAndUpdate({ email: req.session.email },
+        { password: hashedPassword }, function (err, user) {
+          if (err) throw err;
+        });
+      changeSuccess = true;
+    }
+
+  }
+
+  if (gName) {
+    user.findOneAndUpdate({ email: req.session.email },
+      { givenName: gName }, function (err, user) {
+        if (err) throw err;
+      });
+    req.session.firstName = gName;
+    changeSuccess = true;
+  }
+
+  if (fName) {
+    user.findOneAndUpdate({ email: req.session.email },
+      { familyName: fName }, function (err, user) {
+        if (err) throw err;
+      });
+    req.session.lastName = fName;
+    changeSuccess = true;
+  }
+
+  if (sQ) {
+    user.findOneAndUpdate({ email: req.session.email },
+      { securityQuestion: sQ }, function (err, user) {
+        if (err) throw err;
+      });
+    changeSuccess = true;
+  }
+
+  if (sA) {
+    user.findOneAndUpdate({ email: req.session.email },
+      { securityAnswer: sA }, function (err, user) {
+        if (err) throw err;
+      });
+    changeSuccess = true;
+  }
+
+  var fullName = req.session.firstName + " " + req.session.lastName;
+  var userEmail = req.session.email;
+  message.find({}, function (err, messages) {
+    res.render("student-profile", { passwordCheck: passwordFlag, changed: changeSuccess, fullName: fullName, email: userEmail, messages: messages });
+  });
+
+});
+
+
+app.get("/student-profile", function (req, res) {
+  if (!req.session.email || req.session.status != "student") {
+    res.redirect('/login');
+  }
+  else {
+    var fullName = req.session.firstName + " " + req.session.lastName;
+    var userEmail = req.session.email;
+    message.find({}, function (err, messages) {
+      res.render("student-profile", { passwordCheck: false, changed: false, fullName: fullName, email: userEmail, messages: messages });
+    });
+  }
+});
+/*
 app.get('/student-profile', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   if (!req.session.email || req.session.status != "student") {
     res.redirect('/login');
   }
   else {
-    res.render('student-profile');
+    message.find({}, function (err, messages) {
+      if (err) throw err;
+      res.render('student-profile', {
+        messages: messages,
+        name: name
+      });
+    });
   }
 
 });
-
+*/
 app.get('/student-setting', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   if (!req.session.email || req.session.status != "student") {
     res.redirect('/login');
   }
   else {
-    res.render('student-setting');
+    message.find({}, function (err, messages) {
+      if (err) throw err;
+      res.render('student-setting', {
+        messages: messages,
+        name: name
+      });
+    });
   }
 
 });
 
 app.get('/create-team', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   if (!req.session.email || req.session.status != "student") {
     res.redirect('/login');
   }
   else {
-    res.render('create-team');
+    message.find({}, function (err, messages) {
+      if (err) throw err;
+      res.render('create-team', {
+        messages: messages,
+        name: name
+      });
+    });
   }
 
 });
 app.get('/create_fail', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   if (!req.session.email || req.session.status != "student") {
     res.redirect('/login');
   }
   else {
-    res.render('create_fail');
+    message.find({}, function (err, messages) {
+      if (err) throw err;
+      res.render('create_fail', {
+        messages: messages,
+        name: name
+      });
+    });
   }
 
 });
 
 app.get('/no_course', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   if (!req.session.email || req.session.status != "student") {
     res.redirect('/login');
   }
   else {
-    res.render('no_course');
+    message.find({}, function (err, messages) {
+      if (err) throw err;
+      res.render('no_course', {
+        messages: messages,
+        name: name
+      });
+    });
   }
 
 });
@@ -724,7 +1098,7 @@ app.post('/checkteam', function (req, res) {
             course: req.body.course,
             section: req.body.section,
             status: req.body.status,
-            leaderName: req.body.leadername,
+            leaderName: req.session.firstName + " " + req.session.lastName,
             leaderEmail: req.session.email,
             groupName: req.body.groupname,
             groupDescription: req.body.description,
@@ -746,16 +1120,23 @@ app.post('/checkteam', function (req, res) {
 });
 
 app.post('/checkresult', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   var course = req.body.course;
   var section = req.body.section;
   //res.render('result', {coursenum:course});
   group.find({}, function (err, groups) {
     if (err) throw err;
-    res.render('result', {
-      groups: groups,
-      coursenum: course,
-      section: section
+    message.find({}, function (err, messages) {
+      if (err) throw err;
+      res.render('result', {
+        groups: groups,
+        coursenum: course,
+        section: section,
+        messages: messages,
+        name: name
+      });
     });
+
   });
 
   //  res.redirect("/result")
@@ -887,6 +1268,7 @@ app.post('/decline', function (req, res) {
 
 var groupid;
 app.get('/team-info', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   if (!req.session.email || req.session.status != "student") {
     res.redirect('/login');
   }
@@ -900,12 +1282,19 @@ app.get('/team-info', function (req, res) {
         group.find({}, function (err, groups) {
           if (err) throw err;
           //console.log(groupid);
-          res.render('team-info', {
-            groupid: groupid,
-            memberships: memberships,
-            users: users,
-            groups: groups
+          message.find({}, function (err, messages) {
+            if (err) throw err;
+            res.render('team-info', {
+              groupid: groupid,
+              memberships: memberships,
+              users: users,
+              groups: groups,
+              messages: messages,
+              name: name
+            });
           });
+
+
         });
 
       });
@@ -916,6 +1305,7 @@ app.get('/team-info', function (req, res) {
 });
 
 app.get('/team_info_result', function (req, res) {
+  var name = req.session.firstName + " " + req.session.lastName;
   if (!req.session.email || req.session.status != "student") {
     res.redirect('/login');
   }
@@ -929,12 +1319,18 @@ app.get('/team_info_result', function (req, res) {
         group.find({}, function (err, groups) {
           if (err) throw err;
           //console.log(groupid);
-          res.render('team_info_result', {
-            groupid: groupid,
-            memberships: memberships,
-            users: users,
-            groups: groups
+          message.find({}, function (err, messages) {
+            if (err) throw err;
+            res.render('team_info_result', {
+              groupid: groupid,
+              memberships: memberships,
+              users: users,
+              groups: groups,
+              messages: messages,
+              name: name
+            });
           });
+
         });
 
       });
