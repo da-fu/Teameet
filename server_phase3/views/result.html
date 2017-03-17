@@ -126,7 +126,7 @@
                         <li><a href="/student-setting"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="/login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -213,7 +213,6 @@
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                 <tr>
-                                    <th>Group ID</th>
                                     <th>Group Name</th>
                                     <th>Course</th>
                                     <th>Status</th>
@@ -225,17 +224,16 @@
                                 </thead>
                                 <tbody>
                                 <% groups.forEach(function(group){
-                                    if (coursenum == group.course){ %>
+                                    if (coursenum == group.course && section==group.section){ %>
                                 <tr class="odd gradeX">
-                                    <td><%= group.groupId %></td>
                                     <td><%= group.groupName %></td>
                                     <td><%= group.course %></td>
                                     <td><%= group.status %></td>
                                     <td><%= group.section %></td>
                                     <td><%= group.leaderName %></td>
-                                    <td class="center"><%= group.leaderEmail %></td>
-                                    <td class="center"><a href="/team_info_result"><button type="button" style="margin:auto;" class="btn btn-info">Info</button></a>
-                                    <a href="#"><button type="button" onclick="join()" class="btn btn-primary">Join</button></a></td>
+                                    <td name="email" class="center email"><%= group.leaderEmail %></td>
+                                    <td class="center"><a href="/team_info_result"><button type="button" onclick="detail('<%= group._id %>')" style="margin:auto;" class="btn btn-info">Info</button></a>
+                                    <button   type="button" onclick="join('<%= group.leaderEmail %>','<%= group.course %>','<%= group._id %>')" class="btn btn-primary join">Join</button></td>
                                 </tr>
                                  <%}}) %>
                                 </tbody>
@@ -282,10 +280,23 @@
             responsive: true
         });
     });
-    function join(){
-        alert("A request has been sent to the team creater!");
-    }
-    document.getElementById("join").onclick=join;
+
+    
+    function join(email,course,id){
+        $.post("/join", {
+            email: email,
+            course: course,
+            id: id
+        });
+    };
+
+    function detail(groupid){
+        $.post("/detail", {
+            groupid:groupid
+        });
+        
+    };
+    //document.getElementById("join").onclick=join;
 </script>
 </body>
 

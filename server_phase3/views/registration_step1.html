@@ -56,6 +56,11 @@ http://codepen.io/bootstrapped/pen/KwYGwq-->
                     Your email address has already been registered. Please choose another email address. Click <a href="/resetPassword_step1" class="alert-link">HERE</a> if you forget password.
                 </div>
                 <% } %>
+                <% if (pwNotSame) { %>
+                <div class="alert alert-warning">
+                    Password confirmation error. Please enter the same password in the "Confirm Your Password" field.
+                </div>
+                <% } %>
                 <br>
                 <div class="row">
                         <form role="form" method="post" action="/checkReg">
@@ -67,6 +72,7 @@ http://codepen.io/bootstrapped/pen/KwYGwq-->
                                             <option>Select...</option>
                                             <option>student</option>
                                             <option>instructor</option>
+                                            <option>admin</option>
                                         </select>
                                     </div>
 

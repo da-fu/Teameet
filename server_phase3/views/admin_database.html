@@ -82,32 +82,32 @@
 
 
             <li>
-                <a class="pageCat" href="admin_welcome.html">
+                <a class="pageCat" href="/admin_welcome">
                     <i class="fa fa-dashboard fa-fw"></i> General
                 </a>
             </li>
 
 
             <li>
-                <a class="pageCat" href="admin_requests.html">
+                <a class="pageCat" href="/admin_requests">
                     <i class="fa fa-inbox fa-fw"></i> Messages
                 </a>
             </li>
 
             <li>
-                <a class="currentPage" href="admin_database.html">
+                <a class="currentPage" href="/admin_database">
                     <i class="fa fa-database fa-fw"></i> Database
                 </a>
             </li>
 
             <li>
-                <a class="pageCat" href="admin_settings_profile.html">
+                <a class="pageCat" href="/admin_settings_profile">
                     <i class="fa fa-cogs fa-fw"></i> Settings
                 </a>
             </li>
 
             <li>
-                <a class="pageCat" href="#">
+                <a class="pageCat" href="/logout">
                     <i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </a>
             </li>
@@ -144,7 +144,6 @@
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                 <tr>
-                                    <th>User ID</th>
                                     <th>Status</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
@@ -152,90 +151,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="odd gradeX">
-                                    <td>1</td>
-                                    <td>admin</td>
-                                    <td>Bowen</td>
-                                    <td class="center">Gao</td>
-                                    <td class="center">XXXX@utoronto.ca</td>
+                                <% list.forEach(function(element){
+                                %>
+                                <tr class="odd">
+                                    <td><%=element.status%></td>
+                                    <td><%=element.givenName%></td>
+                                    <td><%=element.familyName%></td>
+                                    <td><%=element.email%></td>
                                 </tr>
-                                <tr class="even gradeC">
-                                    <td>2</td>
-                                    <td>admin</td>
-                                    <td>Da</td>
-                                    <td class="center">Fu</td>
-                                    <td class="center">XXXX@utoronto.ca</td>
-                                </tr>
-                                <tr class="odd gradeA">
-                                    <td>3</td>
-                                    <td>admin</td>
-                                    <td>Yunhao</td>
-                                    <td class="center">Ji</td>
-                                    <td class="center">XXXX@utoronto.ca</td>
-                                </tr>
-                                <tr class="even gradeA">
-                                    <td>4</td>
-                                    <td>admin</td>
-                                    <td>Zi</td>
-                                    <td class="center">Wang</td>
-                                    <td class="center">XXXX@utoronto.ca</td>
-                                </tr>
-                                <tr class="odd gradeA">
-                                    <td>5</td>
-                                    <td>student</td>
-                                    <td>Jason</td>
-                                    <td class="center">Xu</td>
-                                    <td class="center">jason.xu@utoronto.ca</td>
-                                </tr>
-                                <tr class="even gradeA">
-                                    <td>6</td>
-                                    <td>instructor</td>
-                                    <td>Lisa</td>
-                                    <td class="center">Lee</td>
-                                    <td class="center">XXXX@utoronto.ca</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>7</td>
-                                    <td>instructor</td>
-                                    <td>Baochun</td>
-                                    <td class="center">Li</td>
-                                    <td class="center">baochun.li@utoronto.ca</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>8</td>
-                                    <td>student</td>
-                                    <td>Tina</td>
-                                    <td class="center">Yang</td>
-                                    <td class="center">tina.yang@ubc.ca</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>9</td>
-                                    <td>student</td>
-                                    <td>Elle</td>
-                                    <td class="center">Wang</td>
-                                    <td class="center">XXXX@utoronto.ca</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>10</td>
-                                    <td>instructor</td>
-                                    <td>Felix</td>
-                                    <td class="center">Chen</td>
-                                    <td class="center">XXXX@utoronto.ca</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>11</td>
-                                    <td>student</td>
-                                    <td>Bob</td>
-                                    <td class="center">Zhao</td>
-                                    <td class="center">XXXX@utoronto.ca</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>12</td>
-                                    <td>student</td>
-                                    <td>Brain</td>
-                                    <td class="center">Leung</td>
-                                    <td class="center">XXXX@utoronto.ca</td>
-                                </tr>
+                                <%})%>
+
                                 </tbody>
                             </table>
                         </div>

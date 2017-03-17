@@ -67,7 +67,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="/">
                 <img src="../static/main-admin/img/logo_dashboard.png" alt="">
             </a>
         </div>
@@ -76,32 +76,32 @@
 
 
             <li>
-                <a class="pageCat" href="admin_welcome.html">
+                <a class="pageCat" href="/admin_welcome">
                     <i class="fa fa-dashboard fa-fw"></i> General
                 </a>
             </li>
 
 
             <li>
-                <a class="pageCat" href="admin_requests.html">
+                <a class="pageCat" href="/admin_requests">
                     <i class="fa fa-inbox fa-fw"></i> Messages
                 </a>
             </li>
 
             <li>
-                <a class="pageCat" href="admin_database.html">
+                <a class="pageCat" href="/admin_database">
                     <i class="fa fa-database fa-fw"></i> Database
                 </a>
             </li>
 
             <li>
-                <a class="currentPage" href="admin_settings_profile.html">
+                <a class="currentPage" href="/admin_settings_profile">
                     <i class="fa fa-cogs fa-fw"></i> Settings
                 </a>
             </li>
 
             <li>
-                <a class="pageCat" href="#">
+                <a class="pageCat" href="/logout">
                     <i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </a>
             </li>
@@ -121,6 +121,16 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
                     <h3 class="page-header">Profile & Settings</h3>
+                    <% if (passwordCheck) { %>
+                    <div class="alert alert-danger">
+                        Password confirmation error. Please enter the same password in the "Confirm Your Password" field.
+                    </div>
+                    <% } %>
+                    <% if (changed) { %>
+                    <div class="alert alert-success">
+                        All changes has been applied.
+                    </div>
+                    <% } %>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -131,7 +141,7 @@
                 <div class="col-md-3">
                     <ul class="nav nav-pills nav-stacked">
                         <li class="active"><a href="#">Edit Profile</a></li>
-                        <li><a href="admin_settings_settings.html">Change Settings</a></li>
+                        <li><a href="/admin_settings_settings">Change Settings</a></li>
                     </ul>
                 </div>
                 <div class="col-md-7">
@@ -141,50 +151,50 @@
                             <i class="fa fa-user fa-fw"></i> Basic User Info
                         </div>
                         <!-- /.panel-heading -->
-                        <form>
+                        <form method="post" action="/profileChangeCheck">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label>Given Name</label>
-                                                <input class="form-control" type="password" placeholder="Admin"required>
+                                                <input class="form-control" type="text" name="givenName">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label>Last Name</label>
-                                                <input class="form-control" type="password" placeholder="Teameet" required>
+                                                <input class="form-control" type="text" name="lastName">
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <!--div class="row">
                                             <div class="form-group col-md-12">
                                                 <label>Email Address</label>
-                                                <input class="form-control"  placeholder="teameet@mail.utoronto.ca" required>
+                                                <input class="form-control"  name="email">
                                             </div>
-                                        </div>
+                                        </div-->
                                         <div class="row">
                                             <div class="form-group col-md-12">
-                                                <label>Set your password</label>
-                                                <input class="form-control" type="password" required>
+                                                <label>Reset your password</label>
+                                                <input class="form-control" type="password" name="password">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label>Confirm your password</label>
-                                                <input class="form-control" type="password" placeholder="Re-enter your password to check" required>
+                                                <input class="form-control" type="password" name="passwordCheck" placeholder="Re-enter your password to check">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label>Security Question</label>
-                                                <input class="form-control" required>
+                                                <input class="form-control" name="securityQuestion">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label>Answer to Your Question</label>
-                                                <input class="form-control" required>
+                                                <input class="form-control" name="securityAnswer" placeholder="You must provide an answer to the question">
                                             </div>
                                         </div>
                                     </div>

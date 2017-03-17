@@ -128,7 +128,7 @@
                         <li><a href="/student-setting"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="/login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -176,6 +176,7 @@
             <!-- /.row -->
             <div class="row">
                 <%  var count=0; select_groups.forEach(function(group){ 
+                    if(group.leaderEmail==cur_user){
                     if(count%4==0){
                     %>
 
@@ -189,13 +190,15 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="/team-info">
+                        
+                        <a href="/team-info" onclick="detail('<%= group._id %>')">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
+                        
                     </div>
                 </div>
                 <% } else if(count%4==1){%>
@@ -209,7 +212,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="team-info.html">
+                        <a href="/team-info" onclick="detail('<%= group._id %>')">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -229,7 +232,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="team-info.html">
+                        <a href="/team-info" onclick="detail('<%= group._id %>')">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -249,7 +252,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="team-info.html">
+                        <a href="/team-info" onclick="detail('<%= group._id %>')">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -258,7 +261,98 @@
                         </a>
                     </div>
                 </div>
-                <% }count+=1; }) %>
+                <% }count+=1; } }) %>
+                <%    memberships.forEach(function(membership){ 
+                    if(membership.studentEmail==cur_user){
+                        
+                        select_groups.forEach(function(group){ 
+                            if(group._id==membership.groupID){
+                                console.log("hehe");
+                    if(count%4==0){
+                    %>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <div class="huge"><%= group.course %></div>
+                                    <div><%= group.groupName %></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="/team-info" onclick="detail('<%= group._id %>')">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                        
+                    </div>
+                </div>
+                <% } else if(count%4==1){%>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <div class="huge"><%= group.course %></div>
+                                    <div><%= group.groupName %></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/team-info" onclick="detail('<%= group._id %>')">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+               <% } else if(count%4==2){%>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <div class="huge"><%= group.course %></div>
+                                    <div><%= group.groupName %></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/team-info" onclick="detail('<%= group._id %>')">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                 <% } else if(count%4==3){%>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <div class="huge"><%= group.course %></div>
+                                    <div><%= group.groupName %></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/team-info" onclick="detail('<%= group._id %>')">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <% }count+=1; } } ) } }) %>
             </div>
             <!-- /.row -->
             <div class="panel panel-default">
@@ -267,53 +361,17 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
+                        <% requests.forEach(function(request){ if(request.receiver==cur_user){ %>
                         <div class="list-group">
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-comment fa-fw"></i> New Comment
-                                <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                            <div  class="list-group-item row">
+                                <i class="fa fa-comment fa-fw"></i> <%= request.content %>
+                                <span class="text-center text-muted small"><em><%= request.time %></em>
                                 </span>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                                </span>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                                </span>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-tasks fa-fw"></i> New Task
-                                <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                                </span>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                <span class="pull-right text-muted small"><em>11:32 AM</em>
-                                </span>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                                <span class="pull-right text-muted small"><em>11:13 AM</em>
-                                </span>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                                <span class="pull-right text-muted small"><em>10:57 AM</em>
-                                </span>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                                <span class="pull-right text-muted small"><em>9:49 AM</em>
-                                </span>
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-money fa-fw"></i> Payment Received
-                                <span class="pull-right text-muted small"><em>Yesterday</em>
-                                </span>
-                            </a>
+                                <button id="select_decline" onclick="decline('<%= request._id %>')" type="button" class="btn btn-danger pull-right">Decline</button>
+                                <button type="button" onclick="accept('<%= request.sender %>','<%= request.groupid %>','<%= request._id %>')" class="btn btn-success pull-right">Accept</button>     
+                            </div>                          
                         </div>
+                        <%} }) %>
                         <!-- /.list-group -->
                         <a href="#" class="btn btn-default btn-block">View All Alerts</a>
                     </div>
@@ -341,7 +399,32 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../static/student/dist/js/sb-admin-2.js"></script>
+    <script>
+    
+    
+    function accept(useremail,groupid,requestid){
+        $.post("/accept", {
+            useremail: useremail,
+            groupid: groupid,
+            requestid:requestid
+        });
+        location.reload();
+    };
+    function decline(requestid){
+        $.post("/decline", {
+            requestid:requestid
+        });
+        location.reload();
+    };
 
+    function detail(groupid){
+        $.post("/detail", {
+            groupid:groupid
+        });
+        
+    };
+    //document.getElementById("join").onclick=join;
+</script>
 </body>
 
 </html>

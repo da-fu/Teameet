@@ -74,31 +74,31 @@
 
             <ul class="nav navbar-top-links navbar-right navbar-collapse">
                 <li>
-                    <a class="currentPage" href="admin_welcome.html">
+                    <a class="currentPage" href="/admin_welcome">
                         <i class="fa fa-dashboard fa-fw"></i> General
                     </a>
                 </li>
 
                 <li>
-                    <a class="pageCat" href="admin_requests.html">
+                    <a class="pageCat" href="/admin_requests">
                         <i class="fa fa-inbox fa-fw"></i> Messages
                     </a>
                 </li>
 
                 <li>
-                    <a class="pageCat" href="admin_database.html">
+                    <a class="pageCat" href="/admin_database">
                         <i class="fa fa-database fa-fw"></i> Database
                     </a>
                 </li>
 
                 <li>
-                    <a class="pageCat" href="admin_settings_profile.html">
+                    <a class="pageCat" href="/admin_settings_profile">
                         <i class="fa fa-cogs fa-fw"></i> Settings
                     </a>
                 </li>
 
                 <li>
-                    <a class="pageCat" href="#">
+                    <a class="pageCat" href="/logout">
                         <i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </a>
                 </li>
@@ -126,8 +126,8 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">3</div>
-                                        <div>New Messages!</div>
+                                        <div class="huge"><%= messageNumber %></div>
+                                        <div>Messages!</div>
                                     </div>
                                 </div>
                             </div>
@@ -148,8 +148,8 @@
                                         <i class="fa fa-user fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">26</div>
-                                        <div>New Users!</div>
+                                        <div class="huge"><%= userNumber %></div>
+                                        <div>Registered Users!</div>
                                     </div>
                                 </div>
                             </div>

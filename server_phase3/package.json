@@ -17,6 +17,7 @@
     "mongo": "*",
     "mongoose": "*",
     "password-hash": "*",
-    "nodemailer": "*"
+    "nodemailer": "*",
+    "moment": "*"
   }
 }

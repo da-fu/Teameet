@@ -25,7 +25,7 @@
 
     <!-- Custom Fonts -->
     <link href="../static/student/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
+
     <!-- style.css -->
     <link href="../static/student/dist/css/style.css" rel="stylesheet">
 
@@ -51,7 +51,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/select"><img class="navbar-brand-logo" src="../static/student/image/logo_title_smaller.png" alt="logo"></a>
+                <a class="navbar-brand" href="/student_welcome"><img class="navbar-brand-logo" src="../static/student/image/logo_title_smaller.png" alt="logo"></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -128,7 +128,7 @@
                         <li><a href="/student-setting"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="/login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -151,11 +151,11 @@
                             </div>
                             <!-- /input-group -->
                         </li>
-                        
+
                         <li>
-                            <a href="/select"><i class="fa fa-users fa-fw"></i> Teams</a>
+                            <a href="/student_welcome"><i class="fa fa-users fa-fw"></i> Teams</a>
                         </li>
-                            <!-- /.nav-second-level -->
+                        <!-- /.nav-second-level -->
                         </li>
                     </ul>
                 </div>
@@ -170,90 +170,95 @@
                     <h1 class="page-header">Create a Team</h1>
                 </div>
                 <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Please provide the following information to create a team
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <!-- Nav tabs -->
-                            
-                            <div class="col-xs-12" style="height:100px;">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Please provide the following information to create a team
                             </div>
-                            <!-- Tab panes -->
-                            <form  role="form" method="post" action="/checkteam">
-                                        University:
-                                        <div class="form-group">
-                                            <input name="university" class="form-control" placeholder="University">
-                                        </div>
-                                        Course:
-                                        <div class="form-group">
-                                            <input name="course" class="form-control" placeholder="Course Number">
-                                            
-                                        </div>
-                                        Section:
-                                        <div class="form-group">
-                                            
-                                            <input name="section" class="form-control" placeholder="Example: 01">
-                                        </div>
-                                        Team Status:
-                                        <div class="form-group">
-                                            <input name="status" class="form-control" placeholder="Example: 2/4">
-                                            
-                                        </div>
-                                        Your Name:
-                                        <div class="form-group">
-                                            <input name="leadername" class="form-control" placeholder="First and Last Name">
-                                            
-                                        </div>
-                                        Your Email Address:
-                                        <div class="form-group">
-                                            <input name="leaderemail" class="form-control" placeholder="Example: xxxx@mail.utoronto.ca">
-                                            
-                                        </div>
-                                        What do you want to name your group?
-                                        <div class="form-group">
-                                            <input name="groupname" class="form-control" placeholder="Example: The Amazing Group">
-                                            
-                                        </div>
-                                         <button type="submit" class="btn btn-default pull-right">Submit</button>
-                            </form>
-                            <div class="col-xs-12" style="height:100px;">
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <!-- Nav tabs -->
+
+                                <div class="col-xs-12" style="height:50px;">
+                                </div>
+                                <!-- Tab panes -->
+                                <form role="form" method="post" action="/checkteam">
+                                    University:
+                                    <div class="form-group">
+                                        <input name="university" class="form-control" placeholder="University">
+                                    </div>
+                                    Course:
+                                    <div class="form-group">
+                                        <input name="course" class="form-control" placeholder="Course Number">
+
+                                    </div>
+                                    Section:
+                                    <div class="form-group">
+
+                                        <input name="section" class="form-control" placeholder="Example: 01">
+                                    </div>
+                                    Team Status:
+                                    <div class="form-group">
+                                        <input name="status" class="form-control" placeholder="Example: 2/4">
+
+                                    </div>
+                                    Your Name:
+                                    <div class="form-group">
+                                        <input name="leadername" class="form-control" placeholder="First and Last Name">
+
+                                    </div>
+                                    Your Email Address:
+                                    <div class="form-group">
+                                        <input name="leaderemail" class="form-control" placeholder="Example: xxxx@mail.utoronto.ca">
+
+                                    </div>
+                                    What do you want to name your group?
+                                    <div class="form-group">
+                                        <input name="groupname" class="form-control" placeholder="Example: The Amazing Group">
+
+                                    </div>
+                                    Describe your Team!
+                                    <div class="form-group">
+                                        <input name="description" class="form-control">
+
+                                    </div>
+                                    <button type="submit" class="btn btn-default pull-right">Submit</button>
+                                </form>
+                                <div class="col-xs-12" style="height:100px;">
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
                         </div>
-                        <!-- /.panel-body -->
+                        <!-- /.col-lg-6 -->
                     </div>
-                    <!-- /.panel -->
+                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.col-lg-6 -->
+
+                <!-- /.row -->
+                <!-- /.row -->
             </div>
-                <!-- /.col-lg-12 -->
-            </div>
-           
-            <!-- /.row -->
-            <!-- /.row -->
+            <!-- /#page-wrapper -->
+
         </div>
-        <!-- /#page-wrapper -->
+        <!-- /#wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
+        <!-- jQuery -->
+        <script src="../static/student/vendor/jquery/jquery.min.js"></script>
 
-    <!-- jQuery -->
-    <script src="../static/student/vendor/jquery/jquery.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../static/student/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../static/student/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../static/student/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../static/student/vendor/metisMenu/metisMenu.min.js"></script>
+        <!-- Morris Charts JavaScript -->
+        <script src="../static/student/vendor/raphael/raphael.min.js"></script>
+        <script src="../static/student/vendor/morrisjs/morris.min.js"></script>
+        <script src="../static/student/data/morris-data.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="../static/student/vendor/raphael/raphael.min.js"></script>
-    <script src="../static/student/vendor/morrisjs/morris.min.js"></script>
-    <script src="../static/student/data/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="../static/student/dist/js/sb-admin-2.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="../static/student/dist/js/sb-admin-2.js"></script>
 
 </body>
 

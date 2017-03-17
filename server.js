@@ -2,16 +2,13 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var mongodb = require('mongodb');
-// The code of Mongoose is referenced to:
-// http://sstruct.github.io/2016/05/15/%E8%AF%91-%E7%94%A8-Mongoose-%E8%BD%BB%E6%9D%BE%E5%BC%80%E5%8F%91-Node-js-MongoDB-%E5%BA%94%E7%94%A8/
 var mongoose = require('mongoose');
 //The code for password hashing is referenced to: https://github.com/davidwood/node-password-hash
 var passwordHash = require('password-hash');
+var moment = require('moment');
 var nodemailer = require('nodemailer');
 var {ObjectId} = require('mongodb');
-var moment = require('moment');
-
-var app = express();
+var app = express()
 
 app.engine('.html', require('ejs').__express);
 //app.set('view engine', 'ejs');
@@ -22,15 +19,15 @@ app.use(express.static(__dirname + '/'));
 
 
 app.use(session({
-    secret: 'teameetSession',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {secure: false, maxAge: 300000}
+  secret: 'teameetSession',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false, maxAge: 300000 }
 }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true
+  extended: true
 }));
 
 
@@ -38,11 +35,11 @@ app.use(bodyParser.urlencoded({
 
 // The code of nodemailer is referenced to: http://blog.fens.me/nodejs-email-nodemailer/
 var mailServer = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'teameet.contact@gmail.com',
-        pass: 'csc309teameet'
-    }
+  service: 'Gmail',
+  auth: {
+    user: 'teameet.contact@gmail.com',
+    pass: 'csc309teameet'
+  }
 });
 
 
@@ -52,69 +49,74 @@ mongoose.connect('mongodb://localhost/teameet-test');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'database: connection error:'));
 db.once('open', function () {
-    console.log('database: connection established');
+  console.log('database: connection established');
 });
 
 var userSchema = mongoose.Schema({
-    status: String,
-    givenName: String,
-    familyName: String,
-    email: String,
-    password: String,
-    securityQuestion: String,
-    securityAnswer: String,
-    activated: Boolean,
-    createTime: Date
+  status: String,
+  givenName: String,
+  familyName: String,
+  email: String,
+  password: String,
+  securityQuestion: String,
+  securityAnswer: String,
+  activated: Boolean,
+  createTime: Date
 });
 var user = mongoose.model('user', userSchema);
 
-var profileSchema = mongoose.Schema({});
+var profileSchema = mongoose.Schema({
+
+});
 var profile = mongoose.model('profile', profileSchema);
 
-var settingSchema = mongoose.Schema({});
+var settingSchema = mongoose.Schema({
+
+});
 var setting = mongoose.model('setting', settingSchema);
 
 
 var groupSchema = mongoose.Schema({
-    university: String,
-    course: String,
-    section: String,
-    status: String,
-    leaderName: String,
-    leaderEmail: String,
-    groupName: String,
-    groupId: Number
+  university: String,
+  course: String,
+  section: String,
+  status: String,
+  leaderName: String,
+  leaderEmail: String,
+  groupName: String,
+  groupDescription: String,
+  groupId: Number
 });
 var group = mongoose.model('group', groupSchema);
 
 
 var courseSchema = mongoose.Schema({
-    university: String,
-    instructor: String,
-    courseCode: String,
-    courseName: String,
-    courseDescription: String,
-    numberLimit: Number,
-    deadline: String,
-    requirements: String,
-    deadlinePassed: Boolean,
-    createTime: String
+  university: String,
+  instructor: String,
+  courseCode: String,
+  courseName: String,
+  courseDescription: String,
+  numberLimit: Number,
+  deadline: Date,
+  requirements: String,
+  deadlinePassed: Boolean,
+  createTime: Date
 });
 var course = mongoose.model('course', courseSchema);
 
 
 var membershipSchema = mongoose.Schema({
-    studentEmail: String,
-    groupID: String
+  studentEmail: String,
+  groupID: String
 });
 var membership = mongoose.model('membership', membershipSchema);
 
 
 var messageSchema = mongoose.Schema({
-    title: String,
-    time: String,
-    sender: String,
-    content: String
+  title: String,
+  time: Date,
+  sender: String,
+  content: String,
 });
 var message = mongoose.model('message', messageSchema);
 
@@ -126,6 +128,7 @@ var requestSchema = mongoose.Schema({
   time: Date
 });
 var request = mongoose.model('request', requestSchema);
+
 
 //////////////////////////////////////////////// Routers - Homepage & Register & Log-in & Reset Password /////////////////////////////////////////////////
 
@@ -604,7 +607,7 @@ app.post("/checkCourse",function(req,res){
 });
 
 
-///////////////////////////////////////////////// Routers - Student ///////////////////////////////////////////////////
+
 
 ///////////////////////////////////////////////// Routers - Student ///////////////////////////////////////////////////
 
@@ -940,7 +943,6 @@ app.post('/detail', function (req, res) {
   });
   */
 });
-
 
 app.listen(process.env.PORT || 3000);
 console.log('Listening on port 3000');

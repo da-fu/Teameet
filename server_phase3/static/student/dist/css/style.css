@@ -25,6 +25,10 @@
     margin-left: 25%;
 }
 
+#select_decline{
+    margin-left: 20px;
+}
+
 @media (min-width: 600px) {
     #brand {
         display: inherit;
