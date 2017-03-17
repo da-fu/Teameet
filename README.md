@@ -16,3 +16,4 @@ to be used for your teamwork on the project
 ### Acknowledgement
 - To avoid the possible delay caused by SMTP middleware, all the account are set "activated=true" currently, which means that you can directly log in to the account without checking the email for activation after registration. Nevertheless, you can still check the email for trial.
 - The functionality of uploading the picture for profile and email notification are still in consideration, since they're a bit useless currently. And We just leave them on the webpage.  
+- For testing purpose, we open "admin" status for registration, in case if you want to test some features. We will disabled this once you mark Phase 3
