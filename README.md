@@ -11,7 +11,9 @@ to be used for your teamwork on the project
 # Phase 3 - Instruction & Acknowledgement
 ### Instruction
 - All the files related to phase 3 are in the folder "server_phase3".
+- Basically, mongod, npm install, npm start, import database, node server.js
 - There are several accounts for testing purpose. If you get tired of our secured registration process, please feel free to use any of them. Passwords are all set to 12345678 by default.
+- Part of the server is designed based on the previous lab on Chatserver.
 - To run the website, use `npm start`.
 - To run the test script, use `npm test`. May need to chmod -x on test.sh.
 - The test script can test: create new user, login, update user info, search for a team, create a team, logout.
