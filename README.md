@@ -13,6 +13,7 @@ to be used for your teamwork on the project
 - All the files related to phase 3 are in the folder "server_phase3".
 - Basically, mongod, npm install, npm start, import database, node server.js
 - There are several accounts for testing purpose. If you get tired of our secured registration process, please feel free to use any of them. Passwords are all set to 12345678 by default.
+- Part of the server is designed based on the previous lab on Chatserver.
     
 ### Acknowledgement
 - To avoid the possible delay caused by SMTP middleware, all the account are set "activated=true" currently, which means that you can directly log in to the account without checking the email for activation after registration. Nevertheless, you can still check the email for trial.
