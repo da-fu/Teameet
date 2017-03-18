@@ -1,0 +1,4 @@
+{"_id":{"$oid":"58cc7661c19e29380ca41969"},"university":"UofT","course":"CSC101","section":"1","status":"1/4","leaderName":"Bowen Gao","leaderEmail":"bowengao@mail.com","groupName":"Houston Rockets","groupDescription":"play hard!","__v":0}
+{"_id":{"$oid":"58cc76cbc19e29380ca4196a"},"university":"UofT","course":"ECE101","section":"1","status":"1/4","leaderName":"Da Fu","leaderEmail":"dafu@mail.com","groupName":"Toronto Raptors","groupDescription":"good team!","__v":0}
+{"_id":{"$oid":"58cc76fec19e29380ca4196b"},"university":"UofT","course":"CHE101","section":"1","status":"1/4","leaderName":"Yunhao Ji","leaderEmail":"yunhaoji@mail.com","groupName":"Chicago Bulls","groupDescription":"work hard!","__v":0}
+{"_id":{"$oid":"58cc7747c19e29380ca4196c"},"university":"UofT","course":"CIV101","section":"1","status":"1/4","leaderName":"Zi Wang","leaderEmail":"ziwang@mail.com","groupName":"Real Madrid","groupDescription":"i can carry!","__v":0}

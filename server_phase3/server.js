@@ -83,7 +83,8 @@ var groupSchema = mongoose.Schema({
   leaderName: String,
   leaderEmail: String,
   groupName: String,
-  groupId: Number
+  groupId: Number,
+  groupDescription: String
 });
 var group = mongoose.model('group', groupSchema);
 
@@ -768,7 +769,7 @@ app.post("/courseFind", function (req, res) {
 
 
   var courseCodeCache = req.body.courseCode;
-
+  resultCache=new Array();
   course.find({ courseCode: courseCodeCache }, function (err, courseFound) {
     courseInfoCache = courseFound[0];
     group.find({ course: courseFound[0].courseCode }, function (err, groupFound) {
@@ -1102,7 +1103,7 @@ app.post('/checkteam', function (req, res) {
             leaderEmail: req.session.email,
             groupName: req.body.groupname,
             groupDescription: req.body.description,
-            groupId: 1
+            //groupId: 1
           });
           newTeam.save(function (err) {
             if (err)
