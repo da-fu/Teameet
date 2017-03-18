@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Team Information</title>
+    <title>Team Information - Teameet</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../static/student/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -63,7 +63,7 @@
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
-                        <%  var a=0; messages.forEach(function(message){ 
+                        <%  var a=0; messages.forEach(function(message){
                              if(a<4){
                              %>
                         <li>
@@ -74,10 +74,10 @@
                                 </div>
                             </a>
                         </li>
-                        
+
                         <li class="divider"></li>
                         <% } a+=1;}) %>
-                        
+
                         <li>
                             <a class="text-center" href="#">
                                 <strong>See All Alerts</strong>
@@ -144,7 +144,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <%  groups.forEach(function(group){ 
+                        <%  groups.forEach(function(group){
                                 if(group._id==groupid){
                                     var course=group.course; %>
                             <div class="panel-heading">
@@ -188,7 +188,7 @@
                                                     </td>
                                                 </tr>
                                                 <% } } ) }}) %>
-                                            <% var count=2; memberships.forEach(function(membership){ 
+                                            <% var count=2; memberships.forEach(function(membership){
                                             if(membership.groupID==groupid){
                                                 users.forEach(function(user){
                                                     if(user.email==membership.studentEmail){

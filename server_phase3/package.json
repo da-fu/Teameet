@@ -4,7 +4,8 @@
   "description": "Website designed for students to find teammates for labs and projects",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no tests \" && exit 1"
+    "test": "./test.sh",
+    "start": "node server.js"
   },
   "author": "Bowen Gao, Yunhao Ji, Da Fu, Zi Wang",
   "license": "MIT",

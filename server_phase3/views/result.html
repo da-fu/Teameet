@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Search Results - Teameet</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../static/student/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -70,7 +70,7 @@
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
-                        <%  var a=0; messages.forEach(function(message){ 
+                        <%  var a=0; messages.forEach(function(message){
                              if(a<4){
                              %>
                         <li>
@@ -81,7 +81,7 @@
                                 </div>
                             </a>
                         </li>
-                        
+
                         <li class="divider"></li>
                         <% } a+=1;}) %>
                         <li>
@@ -177,7 +177,7 @@
                         </div>
                    </div>
                    <div class="row">
-                       <p>Not satisfied with results? You can create your own team!</p>   </br>              
+                       <p>Not satisfied with results? You can create your own team!</p>   </br>
                         <a href="/create-team"><button type="button" class="btn btn-primary">Create a Team</button></a>
                    </div>
                 </div>
@@ -259,7 +259,7 @@
         });
     });
 
-    
+
     function join(email,course,id){
         alert("Request has been sent to team leader!")
         $.post("/join", {
@@ -273,7 +273,7 @@
         $.post("/detail", {
             groupid:groupid
         });
-        
+
     };
     //document.getElementById("join").onclick=join;
 </script>

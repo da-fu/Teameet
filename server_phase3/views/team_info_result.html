@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Team Info - Teameet</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../static/student/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -210,7 +210,7 @@
                                                 </td>
                                             </tr>
                                             <% } } ) }}) %>
-                                        <% var count=2; memberships.forEach(function(membership){ 
+                                        <% var count=2; memberships.forEach(function(membership){
                                             if(membership.groupID==groupid){
                                                 users.forEach(function(user){
                                                     if(user.email==membership.studentEmail){
@@ -242,10 +242,10 @@
                            Team Description:
                         </div>
                         <% groups.forEach(function(group){
-                            if(group._id==groupid){   %>                            
-                        
-                        
-                        
+                            if(group._id==groupid){   %>
+
+
+
                         <div class="panel-body">
                             <large><%= group.groupDescription %></large>
                         </div>

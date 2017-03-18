@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Teams Joined</title>
+    <title>Teams Joined - Teameet</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../static/student/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
 
     <!-- Custom Fonts -->
     <link href="../static/student/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
+
     <!-- style.css -->
     <link href="../static/student/dist/css/style.css" rel="stylesheet">
 
@@ -63,7 +63,7 @@
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
-                         <%  var a=0; messages.forEach(function(message){ 
+                         <%  var a=0; messages.forEach(function(message){
                              if(a<4){
                              %>
                         <li>
@@ -74,7 +74,7 @@
                                 </div>
                             </a>
                         </li>
-                        
+
                         <li class="divider"></li>
                         <% } a+=1;}) %>
                         <li>
@@ -83,7 +83,7 @@
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
-                       
+
                     </ul>
                     <!-- /.dropdown-alerts -->
                 </li>
@@ -121,7 +121,7 @@
                             </div>
                             <!-- /input-group -->
                         </li>
-                        
+
                         <li>
                             <a href="/student_welcome"><i class="fa fa-users fa-fw"></i> Teams</a>
                         </li>
@@ -138,14 +138,14 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Teams Joined
-                        <a href="/join-team" class="create-course" title="Create a course"><i class="fa fa-plus fa-fw"></i></a>
+                        <a href="/join-team" class="create-course" title="Join a team"><i class="fa fa-plus fa-fw"></i></a>
                     </h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
-                <%  var count=0; select_groups.forEach(function(group){ 
+                <%  var count=0; select_groups.forEach(function(group){
                     if(group.leaderEmail==cur_user){
                     if(count%4==0){
                     %>
@@ -160,7 +160,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <a href="/team-info" onclick="detail('<%= group._id %>')">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
@@ -168,7 +168,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </a>
-                        
+
                     </div>
                 </div>
                 <% } else if(count%4==1){%>
@@ -232,10 +232,10 @@
                     </div>
                 </div>
                 <% }count+=1; } }) %>
-                <%    memberships.forEach(function(membership){ 
+                <%    memberships.forEach(function(membership){
                     if(membership.studentEmail==cur_user){
-                        
-                        select_groups.forEach(function(group){ 
+
+                        select_groups.forEach(function(group){
                             if(group._id==membership.groupID){
                                 console.log("hehe");
                     if(count%4==0){
@@ -251,7 +251,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <a href="/team-info" onclick="detail('<%= group._id %>')">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
@@ -259,7 +259,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </a>
-                        
+
                     </div>
                 </div>
                 <% } else if(count%4==1){%>
@@ -338,12 +338,12 @@
                                 <span class="text-center text-muted small"><em><%= request.time %></em>
                                 </span>
                                 <button id="select_decline" onclick="decline('<%= request._id %>')" type="button" class="btn btn-danger pull-right">Decline</button>
-                                <button type="button" onclick="accept('<%= request.sender %>','<%= request.groupid %>','<%= request._id %>')" class="btn btn-success pull-right">Accept</button>     
-                            </div>                          
+                                <button type="button" onclick="accept('<%= request.sender %>','<%= request.groupid %>','<%= request._id %>')" class="btn btn-success pull-right">Accept</button>
+                            </div>
                         </div>
                         <%} }) %>
                         <!-- /.list-group -->
-                       
+
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -370,8 +370,8 @@
     <!-- Custom Theme JavaScript -->
     <script src="../static/student/dist/js/sb-admin-2.js"></script>
     <script>
-    
-    
+
+
     function accept(useremail,groupid,requestid){
         $.post("/accept", {
             useremail: useremail,
@@ -391,7 +391,7 @@
         $.post("/detail", {
             groupid:groupid
         });
-        
+
     };
     //document.getElementById("join").onclick=join;
 </script>
