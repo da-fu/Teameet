@@ -48,3 +48,10 @@ curl -X "POST" "http://localhost:3000/checkteam" \
     "groupname": "awesomeGroup",
     "description": "awesome"
 }'
+
+read -p $'\nLogout'
+curl -X "GET" "http://localhost:3000/logout" \
+-H "Content-Type: application/json; charset=utf-8" \
+-d $'{
+    
+}'
