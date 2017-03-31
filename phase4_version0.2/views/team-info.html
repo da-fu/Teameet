@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Team Information - Teameet</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../static/student/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../static/student/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../static/student/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../static/student/vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../static/student/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- style.css -->
+    <link href="../static/student/dist/css/style.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Tab with material-design style is referenced to: http://bootsnipp.com/snippets/featured/material-design-tab-style -->
+    <style>
+        .nav-tabs { border-bottom: 2px solid #DDD; }
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { border-width: 0; }
+        .nav-tabs > li > a { border: none; color: #666; }
+        .nav-tabs > li.active > a, .nav-tabs > li > a:hover { border: none; color: #4285F4 !important; background: transparent; }
+        .nav-tabs > li > a::after { content: ""; background: #4285F4; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s; transform: scale(0); }
+        .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { transform: scale(1); }
+        .tab-nav > li > a::after { background: #21527d none repeat scroll 0% 0%; color: #fff; }
+        .tab-pane { padding: 15px 0; }
+        .tab-content{padding:20px}
+
+        .card {background: #FFF none repeat scroll 0% 0%;}
+    </style>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/student_welcome"><img class="navbar-brand-logo" src="../static/student/image/logo_title_smaller.png" alt="logo"></a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <span class="navbar-brand" id="login-as">Student</span>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <%  var a=0; messages.forEach(function(message){
+                             if(a<4){
+                             %>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> <%= message.content %>
+                                    <span class="pull-right text-muted small"><%= message.time %></span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+                        <% } a+=1;}) %>
+
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>See All Alerts</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="/student-profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="/student-setting"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+
+                        <li>
+                            <a href="/student_welcome"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="/join-team"><i class="fa fa-plus fa-fw"></i> Join Team</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="/student-profile"><i class="fa fa-file-text fa-fw"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="/student-setting"><i class="fa fa-gears fa-fw"></i> Settings</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Teams Information</h1>
+
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <%  groups.forEach(function(group){
+                                if(group._id==groupid){
+                                    var course=group.course; %>
+                            <div class="panel-heading">
+
+                                <i class="fa fa-users" aria-hidden="true"></i>&nbsp;&nbsp;Team Members - <%= course %>
+
+                            </div>
+                           <% } }) %>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Email</th>
+                                                <th>Option</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% groups.forEach(function(group){
+                                                if(group._id==groupid){
+                                                    var email=group.leaderEmail;
+                                                    users.forEach(function(user){
+                                                        if(user.email==email){ %>
+                                                <tr>
+                                                    <td>
+                                                        <%= 1%>
+                                                    </td>
+                                                    <td>
+                                                        <%= user.givenName %>
+                                                    </td>
+                                                    <td>
+                                                        <%= user.familyName %>
+                                                    </td>
+                                                    <td>
+                                                        <%= user.email %>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-warning" data-toggle="modal" onclick="profileRequest('<%= user.email %>')" data-target=".bd-example-modal-lg">Profile</button>
+                                                        <% if(currentEmail == user.email && group.leaderEmail!=user.email) {%>
+                                                        &nbsp;<button class="btn btn-sm btn-danger" onclick="quitGroup('<%= groupid %>'); location.href = '/student_welcome'">Quit</button>
+                                                        <%}%>
+
+                                                        <% if(currentEmail == user.email && group.leaderEmail==user.email) {%>
+                                                        &nbsp;<button class="btn btn-sm btn-danger disabled" data-toggle="tooltip" title="Team leader can't leave the team!">Quit</button>
+                                                        <%}%>
+                                                    </td>
+                                                </tr>
+                                                <% } } ) }}) %>
+                                            <% var count=2; memberships.forEach(function(membership){
+                                            if(membership.groupID==groupid){
+                                                users.forEach(function(user){
+                                                    if(user.email==membership.studentEmail){
+                                                %>
+                                                <tr>
+                                                    <td>
+                                                        <%= count%>
+                                                    </td>
+                                                    <td>
+                                                        <%= user.givenName %>
+                                                    </td>
+                                                    <td>
+                                                        <%= user.familyName %>
+                                                    </td>
+                                                    <td>
+                                                        <%= user.email %>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-warning" data-toggle="modal" onclick="profileRequest('<%= user.email %>')" data-target=".bd-example-modal-lg">Profile</button>
+                                                        &nbsp;
+                                                        <% if(currentEmail == user.email){ %>
+                                                        <button class="btn btn-sm btn-danger" onclick="quitGroup('<%= groupid %>'); location.href = '/student_welcome'">Quit</button>
+                                                        <% } %>
+                                                    </td>
+                                                </tr>
+                                                <%count+=1; } } ) }}) %>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                                <!-- /.table-responsive -->
+                            </div>
+                            <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-6 -->
+                <!-- /.col-lg-6 -->
+            </div>
+            <!-- /.row -->
+            <!-- /.row -->
+
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                            <i class="fa fa-slack" aria-hidden="true"></i>&nbsp;&nbsp;Slack - Internal Communication
+
+                        </div>
+
+                        <div class="panel-body">
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                            <i class="fa fa-trello" aria-hidden="true"></i>&nbsp;&nbsp;Trello - Task Board
+
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <h5>Integration is currently under testing.</h5>
+                                <h4>Coming soon!</h4>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+
+
+
+    <!-- Use of Modal is referenced to: https://v4-alpha.getbootstrap.com/components/modal/ -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">User Profile</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Tab with material-design style is referenced to: http://bootsnipp.com/snippets/featured/material-design-tab-style -->
+                    <div class="row">
+                        <!-- Nav tabs -->
+                        <div class="card">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#tab_personal" aria-controls="home" role="tab" data-toggle="tab">Personal Information</a></li>
+                                <li role="presentation"><a href="#tab_academic" aria-controls="profile" role="tab" data-toggle="tab">Academic Achievement</a></li>
+                                <li role="presentation"><a href="#tab_social" aria-controls="messages" role="tab" data-toggle="tab">Social Media</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="tab_personal">
+                                    <div class="container">
+
+                                        <dt class="col-sm-3"><p>Gender</p></dt>
+                                        <dd class="col-sm-9"><p id="genderField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Age</p></dt>
+                                        <dd class="col-sm-9"><p id="ageField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Nationality</p></dt>
+                                        <dd class="col-sm-9"><p id="nationalityField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Native Language</p></dt>
+                                        <dd class="col-sm-9"><p id="nativeLanField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Secondary Language</p></dt>
+                                        <dd class="col-sm-9"><p id="secondLanField">Confidential</p></dd>
+
+                                    </div>
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab_academic">
+                                    <div class="container">
+                                        <dt class="col-sm-3"><p>Education Level Achieved</p></dt>
+                                        <dd class="col-sm-9"><p id="eduLevelField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>University / Institution / School</p></dt>
+                                        <dd class="col-sm-9"><p id="schoolField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Field of Study</p></dt>
+                                        <dd class="col-sm-9"><p id="programField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Cumulative GPA</p></dt>
+                                        <dd class="col-sm-9"><p id="cgpaField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Skills</p></dt>
+                                        <dd class="col-sm-9"><p id="skillField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Awards / Certificates</p></dt>
+                                        <dd class="col-sm-9"><p id="awardField">Confidential</p></dd>
+
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab_social">
+                                    <div class="container">
+                                        <dt class="col-sm-3"><p>LinkedIn</p></dt>
+                                        <dd class="col-sm-9"><p id="linkedinField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Facebook</p></dt>
+                                        <dd class="col-sm-9"><p id="facebookField">Confidential</p></dd>
+
+                                        <dt class="col-sm-3"><p>Personal Website</p></dt>
+                                        <dd class="col-sm-9"><p id="webField">Confidential</p></dd>
+
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="dumpCache">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- jQuery -->
+    <script src="../static/student/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../static/student/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../static/student/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../static/student/vendor/raphael/raphael.min.js"></script>
+    <script src="../static/student/vendor/morrisjs/morris.min.js"></script>
+    <script src="../static/student/data/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../static/student/dist/js/sb-admin-2.js"></script>
+
+    <script>
+        function profileRequest(userEmail){
+            var url="/stuProfile?stuEmail="+userEmail;
+            $.get(url, function(data) {
+                var list = JSON.parse(data);
+                console.log(list);
+                if(list.openPublic == "Yes"){
+                    if(list.gender!=="") {
+                        document.getElementById("genderField").innerHTML = list.gender;
+                    }
+                    else{
+                        document.getElementById("genderField").innerHTML="Unknown";
+                    }
+
+                    if(list.age!==""){
+                        document.getElementById("ageField").innerHTML=list.age;
+                    }
+                    else{
+                        document.getElementById("ageField").innerHTML="Unknown";
+                    }
+
+                    if(list.nationality!==""){
+                        document.getElementById("nationalityField").innerHTML=list.nationality;
+                    }
+                    else{
+                        document.getElementById("nationalityField").innerHTML="Unknown";
+                    }
+
+                    if(list.nativeLanguage!==""){
+                        document.getElementById("nativeLanField").innerHTML=list.nativeLanguage;
+                    }
+                    else{
+                        document.getElementById("nativeLanField").innerHTML = "Unknown";
+                    }
+
+                    if(list.secondLanguage!==""){
+                        document.getElementById("secondLanField").innerHTML=list.secondLanguage;
+                    }
+                    else{
+                        document.getElementById("secondLanField").innerHTML="Unknown";
+                    }
+
+                    if(list.eduLevel!==""){
+                        document.getElementById("eduLevelField").innerHTML=list.eduLevel;
+                    }
+                    else{
+                        document.getElementById("eduLevelField").innerHTML="Unknown";
+                    }
+
+                    if(list.schoolName!==""){
+                        document.getElementById("schoolField").innerHTML=list.schoolName;
+                    }
+                    else{
+                        document.getElementById("schoolField").innerHTML="Unknown";
+                    }
+
+                    if(list.program!==""){
+                        document.getElementById("programField").innerHTML=list.program;
+                    }
+                    else{
+                        document.getElementById("programField").innerHTML="Unknown";
+                    }
+
+                    if(list.cGPA!==""){
+                        document.getElementById("cgpaField").innerHTML=list.cGPA;
+                    }
+                    else{
+                        document.getElementById("cgpaField").innerHTML="Unknown";
+                    }
+
+                    if(list.skills!==""){
+                        document.getElementById("skillField").innerHTML=list.skills;
+                    }
+                    else{
+                        document.getElementById("skillField").innerHTML="Unknown";
+                    }
+
+                    if(list.awards!==""){
+                        document.getElementById("awardField").innerHTML=list.awards;
+                    }
+                    else{
+                        document.getElementById("awardField").innerHTML="Unknown";
+                    }
+
+                    if(list.linkedin!==""){
+                        document.getElementById("linkedinField").innerHTML=list.linkedin;
+                    }
+                    else{
+                        document.getElementById("linkedinField").innerHTML="Unknown";
+                    }
+
+                    if(list.facebook!==""){
+                        document.getElementById("facebookField").innerHTML=list.facebook;
+                    }
+                    else{
+                        document.getElementById("facebookField").innerHTML="Unknown";
+                    }
+
+                    if(list.webpage!==""){
+                        document.getElementById("webField").innerHTML=list.webpage;
+                    }
+                    else{
+                        document.getElementById("webField").innerHTML="Unknown";
+                    }
+
+
+                }
+            });
+        }
+
+        $("#dumpCache").click(function(){
+                document.getElementById("genderField").innerHTML="Confidential";
+
+                document.getElementById("ageField").innerHTML="Confidential";
+
+                document.getElementById("nationalityField").innerHTML="Confidential";
+
+                document.getElementById("nativeLanField").innerHTML = "Confidential";
+
+                document.getElementById("secondLanField").innerHTML="Confidential";
+
+                document.getElementById("eduLevelField").innerHTML="Confidential";
+
+                document.getElementById("schoolField").innerHTML="Confidential";
+
+                document.getElementById("programField").innerHTML="Confidential";
+
+                document.getElementById("cgpaField").innerHTML="Confidential";
+
+                document.getElementById("skillField").innerHTML="Confidential";
+
+                document.getElementById("awardField").innerHTML="Confidential";
+
+                document.getElementById("linkedinField").innerHTML="Confidential";
+
+                document.getElementById("facebookField").innerHTML="Confidential";
+
+                document.getElementById("webField").innerHTML="Confidential";
+
+        });
+
+        function quitGroup(id){
+            var url='/leave_group?id='+id;
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: function(){
+                    //console.log("success");
+                }
+            });
+        }
+
+        // Referenced to: https://www.w3schools.com/bootstrap/bootstrap_tooltip.asp
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+</body>
+
+</html>
