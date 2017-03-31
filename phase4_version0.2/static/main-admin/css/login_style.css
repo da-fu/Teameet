@@ -1,0 +1,64 @@
+/* Solution for the right gap in the responsive mode is referenced to:
+http://stackoverflow.com/questions/17005500/bootstrap-2-3-css-responsive-left-with-a-white-space-on-the-right */
+html, body {
+    width: auto !important;
+    overflow-x: hidden !important;
+}
+
+
+/*The solution of vertical alignment in bootstrap grid system is referenced to:
+http://stackoverflow.com/questions/30966450/how-to-vertically-align-div-inside-bootstrap-3-column */
+.row {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width:100%;
+}
+
+.panel-title{
+    text-align:center;
+}
+
+
+.btn{
+    margin-top:10px;
+}
+
+.logo{
+    height:auto;
+    width:80%;
+}
+
+.panel-body{
+    text-align:center;
+}
+
+.btn_login{
+    background:#1890E2;
+    border:none;
+    color:white;
+}
+
+.btn_login:hover{
+    color:white;
+}
+
+.second_form{
+    margin-top:3vh;
+}
+
+.forPass{
+    margin-bottom:3vh;
+}
+
+@media screen and (max-width : 991px){
+
+    .logo{
+        height:auto;
+        width:40%;
+    }
+
+}
+
+
+
