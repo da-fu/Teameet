@@ -1,0 +1,93 @@
+<!-- Page design is referenced to "Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)"-->
+
+<!-- Page elements and frameworks are referenced to Bootstrap v3.3.7 (http://getbootstrap.com/)-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in - Teameet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../static/main-admin/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../static/main-admin/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../static/main-admin/css/login_style.css" rel="stylesheet" type="text/css">
+    <link href="../static/main-admin/css/bootstrap-social.css" rel="stylesheet">
+    <script src="../static/main-admin/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-md-offset-4">
+            <div class="col-lg-8 col-md-8 col-md-offset-2">
+                <span class="logo_brand">
+                    <a class="logo_brand_link">
+                        <img class="logo img-responsive center-block img-fluid"
+                             src="../static/main-admin/img/logo_title_normal.png" alt="">
+                    </a>
+                    <hr>
+                </span>
+
+                <div class="panel-body">
+                    <% if (wrongPassword) { %>
+                    <div class="alert alert-danger">
+                        <p>Wrong password. Please try again.</p>
+                    </div>
+                    <% } %>
+                    <% if (notActivated) { %>
+                    <div class="alert alert-info">
+                        <p>Your account hasn't been activated. Please check your email for the verification link.</p>
+                    </div>
+                    <% } %>
+                    <% if (wrongAccount) { %>
+                    <div class="alert alert-warning">
+                        <p>We don't have any account registered with this email.</p>
+                        <p>Please try again</p>
+                    </div>
+                    <% } %>
+                    <form role="form" method="post" action="/checkLogin">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control second_form" placeholder="Password" name="password"
+                                       type="password" required>
+                            </div>
+                            <h4 class="forPass">
+                                <small>Forget your password? <a href="/resetPassword_step1">Click Here</a></small>
+                            </h4>
+                            <button class="btn btn-lg btn-block btn_login btn-primary" type="submit" value="submit">Log
+                                in
+                            </button>
+                            <a href="/registration_step1" class="btn btn-lg btn-success btn-block">Create New
+                                Account</a>
+
+                        </fieldset>
+                    </form>
+                    <hr>
+                    <h3>
+                        <small>Third-party Login Options</small>
+                    </h3>
+                    <a class="btn btn-social-icon onSignIn" href="/auth/facebook">
+                        <span class="fa fa-facebook"></span>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a class="btn btn-social-icon">
+                        <span class="fa fa-slack"></span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
