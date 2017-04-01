@@ -1,0 +1,76 @@
+/* Solution for the right gap in the responsive mode is referenced to:
+http://stackoverflow.com/questions/17005500/bootstrap-2-3-css-responsive-left-with-a-white-space-on-the-right */
+html, body {
+    width: auto !important;
+    overflow-x: hidden !important;
+}
+
+
+/* Solution of Navbar with well-sized logo image is referenced to:
+http://codepen.io/bootstrapped/pen/KwYGwq */
+.navbar-brand {
+    padding: 0px;
+}
+.navbar-brand>img {
+    height: 100%;
+    padding: 15px;
+    width: auto;
+}
+
+
+.navbar-brand {
+    height: 80px;
+}
+
+.nav >li >a {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.navbar-toggle {
+    padding: 10px;
+    margin: 25px 15px 25px 0;
+}
+
+
+li>a{
+    color:#777;
+}
+
+li>a:hover{
+    color:black;
+}
+
+
+.check_icon{
+    height:auto;
+    width:10vw;
+}
+
+.navbar-default{
+    background-color: white;
+}
+
+
+
+@media screen and (max-width : 767px){
+
+
+    .navbar-brand{
+        transform: translateX(-50%);
+        left: 55vw;
+        position: absolute;
+    }
+
+    .check_icon{
+        height:auto;
+        width:15vw;
+    }
+
+    li>a{
+        text-align:center;
+        font-size:18px;
+    }
+
+}
+

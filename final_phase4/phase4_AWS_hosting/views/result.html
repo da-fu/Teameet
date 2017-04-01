@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Search Results - Teameet</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../static/student/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../static/student/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../static/student/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../static/student/vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../static/student/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- style.css -->
+    <link href="../static/student/dist/css/style.css" rel="stylesheet">
+
+     <!-- DataTables CSS -->
+    <link href="../static/student/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="../static/student/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/student_welcome"><img class="navbar-brand-logo" src="../static/student/image/logo_title_smaller.png" alt="logo"></a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <span class="navbar-brand" id="login-as">Student</span>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <%  var a=0; messages.forEach(function(message){
+                             if(a<4){
+                             %>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> <%= message.content %>
+                                    <span class="pull-right text-muted small"><%= message.time %></span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+                        <% } a+=1;}) %>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>See All Alerts</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="/student-profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="/student-setting"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+
+                        <li>
+                            <a href="/student_welcome"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="/join-team"><i class="fa fa-plus fa-fw"></i> Join Team</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="/student-profile"><i class="fa fa-file-text fa-fw"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="/student-setting"><i class="fa fa-gears fa-fw"></i> Settings</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Results
+                    </h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+           <div class="row">
+               <div class="col-md-12">
+                   <div class="panel panel-default">
+                       <div class="panel-heading">
+                           <i class="fa fa-check-circle" aria-hidden="true"></i> Course Information
+                       </div>
+                       <!-- /.panel-heading -->
+                       <div class="panel-body">
+                           <div class="col-md-4">
+                               <p><strong>University</strong></p>
+                               <p><%= university %></p>
+                           </div>
+                           <div class="col-md-4">
+                               <p><strong>Course Code</strong></p>
+                               <p><%= coursenum %></p>
+                           </div>
+                           <div class="col-md-4">
+                               <p><strong>Section</strong> </p>
+                               <p><%= section %></p>
+                           </div>
+                       </div>
+                   </div>
+
+               </div>
+               </div>
+               <div class="col-md-2 col-lg-2">
+                   <div class="row">
+
+
+
+                       <div class="panel panel-default">
+                           <div class="panel-heading">
+                               <i class="fa fa-filter" aria-hidden="true"></i> Filters
+                           </div>
+                           <!-- /.panel-heading -->
+                           <div class="panel-body">
+                               <div class="form-group">
+                                   <label>size</label>
+                                   <select class="form-control" id="filterPara">
+                                       <% for(var i=0;i<=sizeOption.length-1;i++){ %>
+                                       <option><%= sizeOption[i] %></option>
+                                       <% } %>
+                                   </select>
+                               </div>
+                               <button class="btn btn-primary" id="filterSearch">Apply</button>
+                               <button class="btn btn-default" id="filterClean">clear</button>
+                           </div>
+
+                       </div>
+
+
+                   </div>
+                        <div class="text-center">
+                       <a href="/create-team?university=<%=university%>&course=<%=coursenum%>&section=<%=section%>"><button type="button" class="btn btn-lg btn-success">Create a Team</button></a>
+                        <a class="btn btn-social-icon onSignIn" href="/join-team">Search Again</a>
+                        </div>
+                </div>
+                <div class="col-lg-10 col-md-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-list" aria-hidden="true"></i> Result List
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                <tr>
+                                    <th>Group Name</th>
+                                    <th>Course</th>
+                                    <th>Status</th>
+                                    <th>Section</th>
+                                    <th>Creater's Name</th>
+                                    <th>Creater's Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% groups.forEach(function(group){
+                                    if (coursenum == group.course && section==group.section){ %>
+                                <tr class="odd gradeX">
+                                    <td><%= group.groupName %></td>
+                                    <td><%= group.course %></td>
+                                    <td><%= group.cur_size %>/<%= group.size %></td>
+                                    <td><%= group.section %></td>
+                                    <td><%= group.leaderName %></td>
+                                    <td name="email" class="center email"><%= group.leaderEmail %></td>
+                                    <% if(group.cur_size!=group.size){ %>
+                                    <td class="center"><a href="/team_info_result"><button type="button" onclick="detail('<%= group._id %>')" style="margin:auto;" class="btn btn-info">Info</button></a>
+                                    <button   type="button" onclick="join('<%= group.leaderEmail %>','<%= group.course %>','<%= group._id %>')" class="btn btn-primary join">Join</button></td>
+                                    <%} else{ %>
+                                    <td class="center"><a href="/team_info_result"><button type="button" onclick="detail('<%= group._id %>')" style="margin:auto;" class="btn btn-info">Info</button></a></td>
+                                    <% } %>
+                                </tr>
+                                 <%}}) %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="../static/student/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../static/student/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../static/student/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../static/student/vendor/raphael/raphael.min.js"></script>
+    <script src="../static/student/vendor/morrisjs/morris.min.js"></script>
+    <script src="../static/student/data/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../static/student/dist/js/sb-admin-2.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="../static/student/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../static/student/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../static/student/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+
+
+    });
+
+
+    function join(email,course,id){
+        alert("Request has been sent to team leader!")
+        $.post("/join", {
+            email: email,
+            course: course,
+            id: id
+        });
+    };
+
+    function detail(groupid){
+        $.post("/detail", {
+            groupid:groupid
+        });
+
+    }
+
+    // Changing value of input field is referenced to:
+    // http://stackoverflow.com/questions/5990386/datatables-search-box-outside-datatable
+    $('#filterSearch').click(function(){
+        $('#dataTables-example').DataTable().search(document.getElementById("filterPara").value).draw();
+    });
+    $('#filterClean').click(function(){
+        $('#dataTables-example').DataTable().search("").draw();
+    });
+
+    //document.getElementById("join").onclick=join;
+</script>
+</body>
+
+</html>
