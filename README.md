@@ -30,7 +30,7 @@ to be used for your teamwork on the project
 - There're several differences between two versions:
   - Routing (domains are different, localhost & teameet.kwanstyle.com)
   - Mail service (Mail templates for rendering requires to be stored in the node package. For localhost version, mail service uses plain text; but for hosted version, mail service uses template)
-- If you have issue dealing with our localhost version (bugs and errors), please feel free to try our hosted version instead.
+- If you have issues dealing with our localhost version (bugs and errors), please feel free to try our hosted version instead.
 - There are multiple testing account on the hosted online version for trial.
   - Student 1: 1@1.com  
     Password: 111
