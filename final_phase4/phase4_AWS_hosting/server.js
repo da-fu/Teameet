@@ -809,11 +809,16 @@ app.post("/admin_profileChangeCheck", function (req, res) {
 
 app.get("/accountSuspension", function (req, res) {
     if (req.session.email || req.session.status) {
-        user.findOneAndRemove({email: req.session.email}, function (err) {
+        user.findOneAndRemove({ email: req.session.email }, function (err) {
             if (err) console.log(err);
-            preference.findOneAndRemove({email: req.session.email}, function (err) {
-                req.session.destroy();
-                res.redirect("/");
+            preference.findOneAndRemove({ email: req.session.email }, function (err) {
+                membership.remove({ studentEmail: req.session.email }, function (err) {
+                    group.remove({ leaderEmail: req.session.email }, function (err) {
+                        req.session.destroy();
+                        res.redirect("/");
+                    });
+                });
+
             });
 
         });
@@ -822,13 +827,18 @@ app.get("/accountSuspension", function (req, res) {
         res.redirect("/login");
 });
 
-app.get("/overrideSuspension",function(req,res){
-    if(req.session.email||req.session.status){
-        user.findOneAndRemove({email: req.query.email}, function (err) {
+app.get("/overrideSuspension", function (req, res) {
+    if (req.session.email || req.session.status) {
+        user.findOneAndRemove({ email: req.query.email }, function (err) {
             if (err) console.log(err);
-            preference.findOneAndRemove({email: req.query.email}, function (err) {
-                req.session.destroy();
-                res.status(200).redirect("/admin_database");
+            preference.findOneAndRemove({ email: req.query.email }, function (err) {
+                membership.remove({ studentEmail: req.session.email }, function (err) {
+                    group.remove({ leaderEmail: req.session.email }, function (err) {
+                        req.session.destroy();
+                        res.status(200).redirect("/admin_database");
+                    });
+                });
+
             });
 
         });
