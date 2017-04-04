@@ -323,13 +323,19 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
 
-                        <i class="fa fa-slack" aria-hidden="true"></i>&nbsp;&nbsp;Trello - Task Board
+                        <i class="fa fa-trello" aria-hidden="true"></i>&nbsp;&nbsp;Trello - Task Board
+
 
                     </div>
 
                     <div class="panel-body" id="trelloBoard">
                         <div class="text-center">
-                            <button id="login" class="btn btn-primary">Trello Login</button>
+                            <h4>Team leader must add a board with name of course code (e.g CSC108) on Trello first.</h4>
+                            <h4><small>Then team members can sign in to Trello after being invited.</small></h4>
+                            <% for(var i=0;i<=groups.length;i++){
+                            if(groups[i]._id==groupid){%>
+                            <button class="btn btn-primary" onclick="trelloLogin('<%= groups[i].course %>')">Trello Login</button>
+                            <% break;}} %>
                         </div>
 
                     </div>
@@ -341,7 +347,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
 
-                        <i class="fa fa-trello" aria-hidden="true"></i>&nbsp;&nbsp;Slack - Internal Communication
+                        <i class="fa fa-slack" aria-hidden="true"></i>&nbsp;&nbsp;Slack - Internal Communication
 
                     </div>
 
@@ -648,8 +654,11 @@
 
     });
 
+    var courseNum;
+
     // Use of Trello API is referenced to: http://blog.getcorrello.com/2015/10/14/build-your-own-dashboard-on-the-trello-api/
-    $("#login").click(function () {
+    function trelloLogin(course){
+        courseNum=course;
         Trello.authorize({
             type: "popup",
             name: "Teameet",
@@ -659,18 +668,57 @@
             },
             expiration: "never",
             success: function () {
-                console.log("Successful authentication");
+                Trello.get('/members/me/boards/',loadedBoards,function(){console.log("Failed to load boards");});
             },
             error: function () {
                 console.log("Failed authentication");
             }
         });
 
-        var parent=$('#trelloBoard');
-        parent.empty();
-        parent.append('<div class="text-center"> <h3>Still under testing. Coming Soon!</h3> </div>')
-    });
 
+    }
+
+    // Use of Trello API is referenced to: http://blog.getcorrello.com/2015/10/14/build-your-own-dashboard-on-the-trello-api/
+    function loadedBoards(data){
+        var found=false;
+        for(var i=0;i<data.length;i++){
+            if(data[i].name==courseNum){
+                found=true;
+                Trello.get('/boards/'+data[i].id+'/lists',loadedLists,function(){console.log("Failed to load lists");});
+            }
+        }
+        if(found==false){
+            var parent = $('#trelloBoard');
+            parent.empty();
+            parent.append('<div class="text-center"> <h4>There\'s no board related to this course in your account. <br>Create one on Trello website.</h4></div>');
+        }
+
+
+    }
+
+    // Use of Trello API is referenced to: https://developers.trello.com/sandbox
+    function loadedLists(data){
+        var parent = $('#trelloBoard');
+        parent.empty();
+        if(data.length==0){
+            parent.append('<div class="text-center"><h3>There\'s no list related to this course in your Trello group!</h3>')
+        }
+        else{
+            for(var i=0;i<data.length;i++){
+                parent.append('<div class="panel panel-info"> <div class="panel-heading">listID: '+ data[i].id+'</div> <div class="panel-body">'+data[i].name+'</div> </div>')
+            }
+            parent.append('<div class="text-center"> <button class="btn btn-large btn-warning" onclick="trelloAddCard()">Add a card for follow up!</button></div>');
+
+        }
+
+    }
+
+    function trelloAddCard(){
+        Trello.addCard({
+            url:"https://developers.trello.com/add-card",
+            name:"New card for follow-up!"
+        });
+    }
 
 </script>
 
