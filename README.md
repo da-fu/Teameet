@@ -52,3 +52,7 @@ to be used for your teamwork on the project
   - Online hosting using AWS
   - etc.
 - Comprehensive API services of Slack, Facebook and Trello are still under testing and futher integration. Completed version will be shown during the demo for Phase 5.
+
+# Phase 5 - Further Improvement
+- PDF file of poster design has been added in the root of repo
+- Trello API has been tested and embedded in the phase 4 files, according to the Prof's request by email about merging codes for new progress.
